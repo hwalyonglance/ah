@@ -24,3 +24,6 @@ Auth::routes();
 Route::get('/home', [
     HomeController::class, 'index'
 ])->name('home');
+
+
+Route::resource('roles', App\Http\Controllers\RoleController::class);

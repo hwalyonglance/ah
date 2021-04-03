@@ -16,6 +16,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "infyomlabs/adminlte-templates": "^2.0",
+        "infyomlabs/generator-builder": "dev-master",
         "infyomlabs/laravel-generator": "8.0.x-dev",
         "infyomlabs/swagger-generator": "dev-master",
         "ladumor/one-signal": "^0.3.4",
