@@ -2,22 +2,23 @@
 
 namespace App\Repositories;
 
-use App\Models\Role;
+use App\Models\MateriBab;
 use App\Repositories\BaseRepository;
 
 /**
- * Class RoleRepository
+ * Class MateriBabRepository
  * @package App\Repositories
- * @version April 3, 2021, 1:53 pm UTC
+ * @version April 3, 2021, 9:28 am UTC
 */
 
-class RoleRepository extends BaseRepository
+class MateriBabRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'nama',
+        'materi_id',
+        'video',
         'keterangan'
     ];
 
@@ -36,6 +37,6 @@ class RoleRepository extends BaseRepository
      **/
     public function model()
     {
-        return Role::class;
+        return MateriBab::class;
     }
 }

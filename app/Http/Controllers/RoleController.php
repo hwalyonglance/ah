@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\RoleDataTable;
-use App\Http\Requests;
 use App\Http\Requests\CreateRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Repositories\RoleRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Http\Request;
+use Flash;
 use Response;
 
 class RoleController extends AppBaseController
@@ -24,13 +23,16 @@ class RoleController extends AppBaseController
     /**
      * Display a listing of the Role.
      *
-     * @param RoleDataTable $roleDataTable
+     * @param Request $request
+     *
      * @return Response
      */
-    public function index(RoleDataTable $roleDataTable)
+    public function index(Request $request)
     {
-        // dd((new RoleDataTable())->query(new \App\Models\Role));
-        return $roleDataTable->render('roles.index');
+        $roles = $this->roleRepository->all();
+
+        return view('roles.index')
+            ->with('roles', $roles);
     }
 
     /**
@@ -64,7 +66,7 @@ class RoleController extends AppBaseController
     /**
      * Display the specified Role.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -84,7 +86,7 @@ class RoleController extends AppBaseController
     /**
      * Show the form for editing the specified Role.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -104,7 +106,7 @@ class RoleController extends AppBaseController
     /**
      * Update the specified Role in storage.
      *
-     * @param  int              $id
+     * @param int $id
      * @param UpdateRoleRequest $request
      *
      * @return Response
@@ -129,7 +131,9 @@ class RoleController extends AppBaseController
     /**
      * Remove the specified Role from storage.
      *
-     * @param  int $id
+     * @param int $id
+     *
+     * @throws \Exception
      *
      * @return Response
      */

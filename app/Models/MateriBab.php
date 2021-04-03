@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @SWG\Definition(
- *      definition="Role",
- *      required={"nama", "keterangan"},
+ *      definition="MateriBab",
+ *      required={"materi_id", "video"},
  *      @SWG\Property(
  *          property="id",
  *          description="id",
@@ -17,8 +17,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *          format="int32"
  *      ),
  *      @SWG\Property(
- *          property="nama",
- *          description="nama",
+ *          property="video",
+ *          description="video",
  *          type="string"
  *      ),
  *      @SWG\Property(
@@ -40,21 +40,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *      )
  * )
  */
-class Role extends Model
+class MateriBab extends Model
 {
     use SoftDeletes;
 
     use HasFactory;
 
-    public $table = 'roles';
-    
+    public $table = 'materi_babs';
+
 
     protected $dates = ['deleted_at'];
 
 
 
     public $fillable = [
-        'nama',
+        'materi_id',
+        'video',
         'keterangan'
     ];
 
@@ -65,7 +66,7 @@ class Role extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'nama' => 'string',
+        'video' => 'string',
         'keterangan' => 'string'
     ];
 
@@ -75,9 +76,10 @@ class Role extends Model
      * @var array
      */
     public static $rules = [
-        'nama' => 'required',
+        'materi_id' => 'required',
+        'video' => 'required',
         'keterangan' => 'required'
     ];
 
-    
+
 }
