@@ -13,7 +13,7 @@
     },
     {
         "name": "role_id",
-        "dbType": "bigInteger:unsigned:foreign:roles,id",
+        "dbType": "unsignedBigInteger:index:foreign,roles,id",
         "htmlType": "select",
         "validations": "required",
         "searchable": true,

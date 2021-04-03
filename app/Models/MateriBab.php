@@ -47,7 +47,7 @@ class MateriBab extends Model
     use HasFactory;
 
     public $table = 'materi_babs';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -78,8 +78,8 @@ class MateriBab extends Model
     public static $rules = [
         'materi_id' => 'required',
         'video' => 'required',
-        'keterangan' => 'exit'
+        'keterangan' => 'required'
     ];
 
-    
+
 }

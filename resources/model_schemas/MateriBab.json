@@ -13,7 +13,7 @@
     },
     {
         "name": "materi_id",
-        "dbType": "unsignedBigInteger:foreign,materis,id",
+        "dbType": "unsignedBigInteger:index:foreign,materis,id",
         "htmlType": "select",
         "validations": "required",
         "searchable": true,
@@ -39,7 +39,7 @@
         "name": "keterangan",
         "dbType": "string",
         "htmlType": "textarea",
-        "validations": "exit",
+        "validations": "required",
         "searchable": true,
         "fillable": true,
         "primary": false,
