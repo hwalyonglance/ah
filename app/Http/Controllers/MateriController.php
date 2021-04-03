@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\MateriDataTable;
-use App\Http\Requests;
 use App\Http\Requests\CreateMateriRequest;
 use App\Http\Requests\UpdateMateriRequest;
 use App\Repositories\MateriRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Http\Request;
+use Flash;
 use Response;
 
 class MateriController extends AppBaseController
@@ -24,12 +23,16 @@ class MateriController extends AppBaseController
     /**
      * Display a listing of the Materi.
      *
-     * @param MateriDataTable $materiDataTable
+     * @param Request $request
+     *
      * @return Response
      */
-    public function index(MateriDataTable $materiDataTable)
+    public function index(Request $request)
     {
-        return $materiDataTable->render('materis.index');
+        $materis = $this->materiRepository->all();
+
+        return view('materis.index')
+            ->with('materis', $materis);
     }
 
     /**
@@ -55,7 +58,6 @@ class MateriController extends AppBaseController
 
         $materi = $this->materiRepository->create($input);
 
-        // dd($input, $materi);
         Flash::success('Materi saved successfully.');
 
         return redirect(route('materis.index'));
@@ -64,7 +66,7 @@ class MateriController extends AppBaseController
     /**
      * Display the specified Materi.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -84,7 +86,7 @@ class MateriController extends AppBaseController
     /**
      * Show the form for editing the specified Materi.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -104,7 +106,7 @@ class MateriController extends AppBaseController
     /**
      * Update the specified Materi in storage.
      *
-     * @param  int              $id
+     * @param int $id
      * @param UpdateMateriRequest $request
      *
      * @return Response
@@ -129,7 +131,9 @@ class MateriController extends AppBaseController
     /**
      * Remove the specified Materi from storage.
      *
-     * @param  int $id
+     * @param int $id
+     *
+     * @throws \Exception
      *
      * @return Response
      */

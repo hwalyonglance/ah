@@ -16,14 +16,12 @@ class CreateMateriBabsTable extends Migration
     {
         Schema::create('materi_babs', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('materi_id')
-                ->index()
-                ->references('id')
-                ->on('materis');
+            $table->unsignedBigInteger('materi_id');
             $table->string('video');
             $table->string('keterangan');
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('materi_id')->references('id')->on('materis');
         });
     }
 

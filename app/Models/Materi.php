@@ -64,7 +64,7 @@ class Materi extends Model
     use HasFactory;
 
     public $table = 'materis';
-
+    
 
     protected $dates = ['deleted_at'];
 
@@ -104,8 +104,5 @@ class Materi extends Model
         'keterangan' => 'required'
     ];
 
-    public function role()
-    {
-        return $this->belongsTo(Role::class, 'role_id', 'id');
-    }
+    
 }

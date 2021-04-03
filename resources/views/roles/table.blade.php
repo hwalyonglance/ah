@@ -2,10 +2,7 @@
     <table class="table" id="roles-table">
         <thead>
             <tr>
-                <th>Role Id</th>
-        <th>Type</th>
-        <th>Gambar</th>
-        <th>Judul</th>
+                <th>Nama</th>
         <th>Keterangan</th>
                 <th colspan="3">Action</th>
             </tr>
@@ -13,10 +10,7 @@
         <tbody>
         @foreach($roles as $role)
             <tr>
-                <td>{{ $role->role_id }}</td>
-            <td>{{ $role->type }}</td>
-            <td>{{ $role->gambar }}</td>
-            <td>{{ $role->judul }}</td>
+                <td>{{ $role->nama }}</td>
             <td>{{ $role->keterangan }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['roles.destroy', $role->id], 'method' => 'delete']) !!}

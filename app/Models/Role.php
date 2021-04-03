@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * @SWG\Definition(
  *      definition="Role",
- *      required={"role_id", "type", "judul", "keterangan"},
+ *      required={"nama", "keterangan"},
  *      @SWG\Property(
  *          property="id",
  *          description="id",
@@ -17,25 +17,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *          format="int32"
  *      ),
  *      @SWG\Property(
- *          property="role_id",
- *          description="role_id",
- *          type="integer",
- *          format="int32"
- *      ),
- *      @SWG\Property(
- *          property="type",
- *          description="type",
- *          type="integer",
- *          format="int32"
- *      ),
- *      @SWG\Property(
- *          property="gambar",
- *          description="gambar",
- *          type="string"
- *      ),
- *      @SWG\Property(
- *          property="judul",
- *          description="judul",
+ *          property="nama",
+ *          description="nama",
  *          type="string"
  *      ),
  *      @SWG\Property(
@@ -71,10 +54,7 @@ class Role extends Model
 
 
     public $fillable = [
-        'role_id',
-        'type',
-        'gambar',
-        'judul',
+        'nama',
         'keterangan'
     ];
 
@@ -85,10 +65,7 @@ class Role extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'role_id' => 'integer',
-        'type' => 'integer',
-        'gambar' => 'string',
-        'judul' => 'string',
+        'nama' => 'string',
         'keterangan' => 'string'
     ];
 
@@ -98,9 +75,7 @@ class Role extends Model
      * @var array
      */
     public static $rules = [
-        'role_id' => 'required',
-        'type' => 'required',
-        'judul' => 'required',
+        'nama' => 'required',
         'keterangan' => 'required'
     ];
 
