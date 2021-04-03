@@ -1,9 +1,14 @@
 <!-- Role Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('role_id', 'Role Id:') !!}
-    {!! Form::select('role_id', ], null, ['class' => 'form-control custom-select']) !!}
+    {!! Form::select('role_id', [1=>1,2=>2], null, ['class' => 'form-control custom-select']) !!}
 </div>
 
+<!-- Role Id Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('type', 'Untuk:') !!}
+    {!! Form::select('type', [1=>1,2=>2], null, ['class' => 'form-control custom-select']) !!}
+</div>
 
 <!-- Gambar Field -->
 <div class="form-group col-sm-6">

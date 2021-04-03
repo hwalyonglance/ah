@@ -29,6 +29,7 @@ class RoleController extends AppBaseController
      */
     public function index(RoleDataTable $roleDataTable)
     {
+        // dd((new RoleDataTable())->query(new \App\Models\Role));
         return $roleDataTable->render('roles.index');
     }
 

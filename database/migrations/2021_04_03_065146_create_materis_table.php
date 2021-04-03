@@ -16,14 +16,13 @@ class CreateMaterisTable extends Migration
     {
         Schema::create('materis', function (Blueprint $table) {
             $table->increments('id');
-            $table->biginteger('role_id')->unsigned()->roles(id);
-            $table->smallinteger('type');
+            $table->bigInteger('role_id')->unsigned()->foreign('roles');
+            $table->smallInteger('type');
             $table->string('gambar')->nullable();
             $table->string('judul');
             $table->string('keterangan');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('role_id')->references('')->on('');
         });
     }
 

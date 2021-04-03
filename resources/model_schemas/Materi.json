@@ -13,7 +13,7 @@
     },
     {
         "name": "role_id",
-        "dbType": "biginteger:unsigned:foreign:roles,id",
+        "dbType": "bigInteger:unsigned:foreign:roles,id",
         "htmlType": "select",
         "validations": "required",
         "searchable": true,
@@ -25,8 +25,8 @@
     },
     {
         "name": "type",
-        "dbType": "smallinteger",
-        "htmlType": "radio:1,2",
+        "dbType": "smallInteger",
+        "htmlType": "select:1,2",
         "validations": "required",
         "searchable": true,
         "fillable": true,

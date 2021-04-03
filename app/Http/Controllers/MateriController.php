@@ -55,6 +55,7 @@ class MateriController extends AppBaseController
 
         $materi = $this->materiRepository->create($input);
 
+        // dd($input, $materi);
         Flash::success('Materi saved successfully.');
 
         return redirect(route('materis.index'));
