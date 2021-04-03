@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * @SWG\Definition(
  *      definition="MateriBab",
- *      required={"materi_id", "video"},
+ *      required={"materi_id", "video", "keterangan"},
  *      @SWG\Property(
  *          property="id",
  *          description="id",
@@ -47,7 +47,7 @@ class MateriBab extends Model
     use HasFactory;
 
     public $table = 'materi_babs';
-
+    
 
     protected $dates = ['deleted_at'];
 
@@ -81,5 +81,5 @@ class MateriBab extends Model
         'keterangan' => 'required'
     ];
 
-
+    
 }

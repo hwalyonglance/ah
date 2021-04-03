@@ -13,7 +13,7 @@
     },
     {
         "name": "materi_id",
-        "dbType": "unsignedBigInteger:index:foreign,materis,id",
+        "dbType": "unsignedInteger:index:foreign,materis,id",
         "htmlType": "select",
         "validations": "required",
         "searchable": true,

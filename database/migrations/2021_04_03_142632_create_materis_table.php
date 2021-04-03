@@ -16,7 +16,7 @@ class CreateMaterisTable extends Migration
     {
         Schema::create('materis', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('role_id')->index();
+            $table->unsignedInteger('role_id')->index();
             $table->smallInteger('type');
             $table->string('gambar')->nullable();
             $table->string('judul');

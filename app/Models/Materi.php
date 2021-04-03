@@ -17,12 +17,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *          format="int32"
  *      ),
  *      @SWG\Property(
- *          property="role_id",
- *          description="role_id",
- *          type="integer",
- *          format="int32"
- *      ),
- *      @SWG\Property(
  *          property="type",
  *          description="type",
  *          type="integer",
@@ -85,7 +79,6 @@ class Materi extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'role_id' => 'integer',
         'type' => 'integer',
         'gambar' => 'string',
         'judul' => 'string',
