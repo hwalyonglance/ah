@@ -83,9 +83,9 @@ abstract class BaseRepository
      * @param int|null $limit
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function allQuery($search = [], $skip = null, $limit = null)
+    public function allQuery($search = [], $with = [], $skip = null, $limit = null)
     {
-        $query = $this->model->newQuery();
+        $query = $this->model->with($with)->newQuery();
 
         if (count($search)) {
             foreach($search as $key => $value) {
@@ -116,9 +116,9 @@ abstract class BaseRepository
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
+    public function all($search = [], $with = [], $skip = null, $limit = null, $columns = ['*'])
     {
-        $query = $this->allQuery($search, $skip, $limit);
+        $query = $this->allQuery($search, $with, $skip, $limit);
 
         return $query->get($columns);
     }
@@ -189,5 +189,13 @@ abstract class BaseRepository
         $model = $query->findOrFail($id);
 
         return $model->delete();
+    }
+
+    public function indexById(){
+        return $this->model->indexById();
+    }
+
+    public function options($display = 'nama'){
+        return $this->model->options($display);
     }
 }

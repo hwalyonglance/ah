@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -40,14 +39,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *      )
  * )
  */
-class Role extends Model
+class Role extends BaseModel
 {
     use SoftDeletes;
 
     use HasFactory;
 
     public $table = 'roles';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -78,6 +77,4 @@ class Role extends Model
         'nama' => 'required',
         'keterangan' => 'required'
     ];
-
-    
 }

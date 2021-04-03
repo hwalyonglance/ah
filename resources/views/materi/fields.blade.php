@@ -1,13 +1,13 @@
 <!-- Role Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('role_id', 'Role Id:') !!}
-    {!! Form::select('role_id', [1=>1,2=>2], null, ['class' => 'form-control custom-select']) !!}
+    {!! Form::label('role_id', 'Materi Untuk:') !!}
+    {!! Form::select('role_id', $roles, null, ['class' => 'form-control custom-select']) !!}
 </div>
 
-<!-- Untuk Id Field -->
+<!-- Jenis Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('type', 'Untuk:') !!}
-    {!! Form::select('type', [1=>1,2=>2], null, ['class' => 'form-control custom-select']) !!}
+    {!! Form::label('type', 'Jenis:') !!}
+    {!! Form::select('type', \App\Models\Materi::JENIS, null, ['class' => 'form-control custom-select']) !!}
 </div>
 
 <!-- Gambar Field -->

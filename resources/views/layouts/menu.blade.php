@@ -5,20 +5,9 @@
     </a>
 </li>
 
-
 <li class="nav-item">
-    <a href="{{ route('materis.index') }}"
-       class="nav-link {{ Request::is('materis*') ? 'active' : '' }}">
-        <p>Materis</p>
+    <a href="{{ route('materi.index') }}"
+       class="nav-link {{ Request::is('materi*') ? 'active' : '' }}">
+        <p>Materi</p>
     </a>
 </li>
-
-
-<li class="nav-item">
-    <a href="{{ route('materiBabs.index') }}"
-       class="nav-link {{ Request::is('materiBabs*') ? 'active' : '' }}">
-        <p>Materi Babs</p>
-    </a>
-</li>
-
-

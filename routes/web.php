@@ -28,6 +28,6 @@ Route::get('/home', [
 
 Route::resource('roles', App\Http\Controllers\RoleController::class);
 
-Route::resource('materis', App\Http\Controllers\MateriController::class);
+Route::resource('materi', App\Http\Controllers\MateriController::class);
 
-Route::resource('materiBabs', App\Http\Controllers\MateriBabController::class);
+Route::resource('materi.bab', App\Http\Controllers\MateriBabController::class);

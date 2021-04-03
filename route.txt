@@ -1,0 +1,70 @@
++--------+----------------------------------------+-----------------------------------+-------------------------+------------------------------------------------------------------------+------------+
+| Domain | Method                                 | URI                               | Name                    | Action                                                                 | Middleware |
++--------+----------------------------------------+-----------------------------------+-------------------------+------------------------------------------------------------------------+------------+
+|        | GET|HEAD                               | /                                 |                         | Closure                                                                | web        |
+|        | GET|HEAD                               | api/docs                          | swaggervel.ui           | Appointer\Swaggervel\Http\Controllers\SwaggervelController@ui          |            |
+|        | POST                                   | api/materi_babs                   | api.materi_babs.store   | App\Http\Controllers\API\MateriBabAPIController@store                  | api        |
+|        | GET|HEAD                               | api/materi_babs                   | api.materi_babs.index   | App\Http\Controllers\API\MateriBabAPIController@index                  | api        |
+|        | GET|HEAD                               | api/materi_babs/create            | api.materi_babs.create  | App\Http\Controllers\API\MateriBabAPIController@create                 | api        |
+|        | GET|HEAD                               | api/materi_babs/{materi_bab}      | api.materi_babs.show    | App\Http\Controllers\API\MateriBabAPIController@show                   | api        |
+|        | PUT|PATCH                              | api/materi_babs/{materi_bab}      | api.materi_babs.update  | App\Http\Controllers\API\MateriBabAPIController@update                 | api        |
+|        | DELETE                                 | api/materi_babs/{materi_bab}      | api.materi_babs.destroy | App\Http\Controllers\API\MateriBabAPIController@destroy                | api        |
+|        | GET|HEAD                               | api/materi_babs/{materi_bab}/edit | api.materi_babs.edit    | App\Http\Controllers\API\MateriBabAPIController@edit                   | api        |
+|        | GET|HEAD                               | api/materis                       | api.materis.index       | App\Http\Controllers\API\MateriAPIController@index                     | api        |
+|        | POST                                   | api/materis                       | api.materis.store       | App\Http\Controllers\API\MateriAPIController@store                     | api        |
+|        | GET|HEAD                               | api/materis/create                | api.materis.create      | App\Http\Controllers\API\MateriAPIController@create                    | api        |
+|        | GET|HEAD                               | api/materis/{materi}              | api.materis.show        | App\Http\Controllers\API\MateriAPIController@show                      | api        |
+|        | PUT|PATCH                              | api/materis/{materi}              | api.materis.update      | App\Http\Controllers\API\MateriAPIController@update                    | api        |
+|        | DELETE                                 | api/materis/{materi}              | api.materis.destroy     | App\Http\Controllers\API\MateriAPIController@destroy                   | api        |
+|        | GET|HEAD                               | api/materis/{materi}/edit         | api.materis.edit        | App\Http\Controllers\API\MateriAPIController@edit                      | api        |
+|        | POST                                   | api/roles                         | api.roles.store         | App\Http\Controllers\API\RoleAPIController@store                       | api        |
+|        | GET|HEAD                               | api/roles                         | api.roles.index         | App\Http\Controllers\API\RoleAPIController@index                       | api        |
+|        | GET|HEAD                               | api/roles/create                  | api.roles.create        | App\Http\Controllers\API\RoleAPIController@create                      | api        |
+|        | PUT|PATCH                              | api/roles/{role}                  | api.roles.update        | App\Http\Controllers\API\RoleAPIController@update                      | api        |
+|        | DELETE                                 | api/roles/{role}                  | api.roles.destroy       | App\Http\Controllers\API\RoleAPIController@destroy                     | api        |
+|        | GET|HEAD                               | api/roles/{role}                  | api.roles.show          | App\Http\Controllers\API\RoleAPIController@show                        | api        |
+|        | GET|HEAD                               | api/roles/{role}/edit             | api.roles.edit          | App\Http\Controllers\API\RoleAPIController@edit                        | api        |
+|        | GET|HEAD                               | api/user                          | api.                    | Closure                                                                | api        |
+|        |                                        |                                   |                         |                                                                        | auth:api   |
+|        | GET|HEAD|POST|PUT|PATCH|DELETE|OPTIONS | docs/{page?}                      | swaggervel.definitions  | Appointer\Swaggervel\Http\Controllers\SwaggervelController@definitions |            |
+|        | GET|HEAD                               | home                              | home                    | App\Http\Controllers\HomeController@index                              | web        |
+|        |                                        |                                   |                         |                                                                        | auth       |
+|        | GET|HEAD                               | login                             | login                   | App\Http\Controllers\Auth\LoginController@showLoginForm                | web        |
+|        |                                        |                                   |                         |                                                                        | guest      |
+|        | POST                                   | login                             |                         | App\Http\Controllers\Auth\LoginController@login                        | web        |
+|        |                                        |                                   |                         |                                                                        | guest      |
+|        | POST                                   | logout                            | logout                  | App\Http\Controllers\Auth\LoginController@logout                       | web        |
+|        | GET|HEAD                               | materis                           | materis.index           | App\Http\Controllers\MateriController@index                            | web        |
+|        | POST                                   | materis                           | materis.store           | App\Http\Controllers\MateriController@store                            | web        |
+|        | GET|HEAD                               | materis/create                    | materis.create          | App\Http\Controllers\MateriController@create                           | web        |
+|        | DELETE                                 | materis/{materi}                  | materis.destroy         | App\Http\Controllers\MateriController@destroy                          | web        |
+|        | PUT|PATCH                              | materis/{materi}                  | materis.update          | App\Http\Controllers\MateriController@update                           | web        |
+|        | GET|HEAD                               | materis/{materi}                  | materis.show            | App\Http\Controllers\MateriController@show                             | web        |
+|        | POST                                   | materis/{materi}/bab              | materis.bab.store       | App\Http\Controllers\MateriBabController@store                         | web        |
+|        | GET|HEAD                               | materis/{materi}/bab              | materis.bab.index       | App\Http\Controllers\MateriBabController@index                         | web        |
+|        | GET|HEAD                               | materis/{materi}/bab/create       | materis.bab.create      | App\Http\Controllers\MateriBabController@create                        | web        |
+|        | PUT|PATCH                              | materis/{materi}/bab/{bab}        | materis.bab.update      | App\Http\Controllers\MateriBabController@update                        | web        |
+|        | GET|HEAD                               | materis/{materi}/bab/{bab}        | materis.bab.show        | App\Http\Controllers\MateriBabController@show                          | web        |
+|        | DELETE                                 | materis/{materi}/bab/{bab}        | materis.bab.destroy     | App\Http\Controllers\MateriBabController@destroy                       | web        |
+|        | GET|HEAD                               | materis/{materi}/bab/{bab}/edit   | materis.bab.edit        | App\Http\Controllers\MateriBabController@edit                          | web        |
+|        | GET|HEAD                               | materis/{materi}/edit             | materis.edit            | App\Http\Controllers\MateriController@edit                             | web        |
+|        | POST                                   | password/confirm                  |                         | App\Http\Controllers\Auth\ConfirmPasswordController@confirm            | web        |
+|        |                                        |                                   |                         |                                                                        | auth       |
+|        | GET|HEAD                               | password/confirm                  | password.confirm        | App\Http\Controllers\Auth\ConfirmPasswordController@showConfirmForm    | web        |
+|        |                                        |                                   |                         |                                                                        | auth       |
+|        | POST                                   | password/email                    | password.email          | App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail  | web        |
+|        | GET|HEAD                               | password/reset                    | password.request        | App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm | web        |
+|        | POST                                   | password/reset                    | password.update         | App\Http\Controllers\Auth\ResetPasswordController@reset                | web        |
+|        | GET|HEAD                               | password/reset/{token}            | password.reset          | App\Http\Controllers\Auth\ResetPasswordController@showResetForm        | web        |
+|        | GET|HEAD                               | register                          | register                | App\Http\Controllers\Auth\RegisterController@showRegistrationForm      | web        |
+|        |                                        |                                   |                         |                                                                        | guest      |
+|        | POST                                   | register                          |                         | App\Http\Controllers\Auth\RegisterController@register                  | web        |
+|        |                                        |                                   |                         |                                                                        | guest      |
+|        | GET|HEAD                               | roles                             | roles.index             | App\Http\Controllers\RoleController@index                              | web        |
+|        | POST                                   | roles                             | roles.store             | App\Http\Controllers\RoleController@store                              | web        |
+|        | GET|HEAD                               | roles/create                      | roles.create            | App\Http\Controllers\RoleController@create                             | web        |
+|        | PUT|PATCH                              | roles/{role}                      | roles.update            | App\Http\Controllers\RoleController@update                             | web        |
+|        | GET|HEAD                               | roles/{role}                      | roles.show              | App\Http\Controllers\RoleController@show                               | web        |
+|        | DELETE                                 | roles/{role}                      | roles.destroy           | App\Http\Controllers\RoleController@destroy                            | web        |
+|        | GET|HEAD                               | roles/{role}/edit                 | roles.edit              | App\Http\Controllers\RoleController@edit                               | web        |
++--------+----------------------------------------+-----------------------------------+-------------------------+------------------------------------------------------------------------+------------+

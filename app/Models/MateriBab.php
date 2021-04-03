@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -40,14 +39,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *      )
  * )
  */
-class MateriBab extends Model
+class MateriBab extends BaseModel
 {
     use SoftDeletes;
 
     use HasFactory;
 
     public $table = 'materi_babs';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -81,5 +80,5 @@ class MateriBab extends Model
         'keterangan' => 'required'
     ];
 
-    
+
 }

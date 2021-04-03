@@ -1,13 +1,13 @@
 <!-- Role Id Field -->
 <div class="col-sm-12">
-    {!! Form::label('role_id', 'Role Id:') !!}
-    <p>{{ $materi->role_id }}</p>
+    {!! Form::label('role_id', 'Untuk:') !!}
+    <p>{{ $materi->role->nama }}</p>
 </div>
 
 <!-- Type Field -->
 <div class="col-sm-12">
     {!! Form::label('type', 'Type:') !!}
-    <p>{{ $materi->type }}</p>
+    <p>{{ $materi->display_type }}</p>
 </div>
 
 <!-- Gambar Field -->

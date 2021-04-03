@@ -2,22 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateMateriRequest;
 use App\Http\Requests\UpdateMateriRequest;
 use App\Repositories\MateriRepository;
-use App\Http\Controllers\AppBaseController;
+use App\Repositories\RoleRepository;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+
+use App\Models\Role;
 
 class MateriController extends AppBaseController
 {
     /** @var  MateriRepository */
     private $materiRepository;
 
-    public function __construct(MateriRepository $materiRepo)
+    public function __construct(
+        MateriRepository $materiRepo,
+        RoleRepository $roleRepo)
     {
         $this->materiRepository = $materiRepo;
+        $this->roleRepository = $roleRepo;
     }
 
     /**
@@ -31,7 +37,7 @@ class MateriController extends AppBaseController
     {
         $materis = $this->materiRepository->all();
 
-        return view('materis.index')
+        return view('materi.index')
             ->with('materis', $materis);
     }
 
@@ -42,7 +48,9 @@ class MateriController extends AppBaseController
      */
     public function create()
     {
-        return view('materis.create');
+        $roles = $this->roleRepository->options();
+        // dd($roles);
+        return view('materi.create', compact('roles'));
     }
 
     /**
@@ -60,7 +68,7 @@ class MateriController extends AppBaseController
 
         Flash::success('Materi saved successfully.');
 
-        return redirect(route('materis.index'));
+        return redirect(route('materi.index'));
     }
 
     /**
@@ -77,10 +85,10 @@ class MateriController extends AppBaseController
         if (empty($materi)) {
             Flash::error('Materi not found');
 
-            return redirect(route('materis.index'));
+            return redirect(route('materi.index'));
         }
 
-        return view('materis.show')->with('materi', $materi);
+        return view('materi.show')->with('materi', $materi);
     }
 
     /**
@@ -97,10 +105,10 @@ class MateriController extends AppBaseController
         if (empty($materi)) {
             Flash::error('Materi not found');
 
-            return redirect(route('materis.index'));
+            return redirect(route('materi.index'));
         }
 
-        return view('materis.edit')->with('materi', $materi);
+        return view('materi.edit')->with('materi', $materi);
     }
 
     /**
@@ -118,14 +126,14 @@ class MateriController extends AppBaseController
         if (empty($materi)) {
             Flash::error('Materi not found');
 
-            return redirect(route('materis.index'));
+            return redirect(route('materi.index'));
         }
 
         $materi = $this->materiRepository->update($request->all(), $id);
 
         Flash::success('Materi updated successfully.');
 
-        return redirect(route('materis.index'));
+        return redirect(route('materi.index'));
     }
 
     /**
@@ -144,13 +152,13 @@ class MateriController extends AppBaseController
         if (empty($materi)) {
             Flash::error('Materi not found');
 
-            return redirect(route('materis.index'));
+            return redirect(route('materi.index'));
         }
 
         $this->materiRepository->delete($id);
 
         Flash::success('Materi deleted successfully.');
 
-        return redirect(route('materis.index'));
+        return redirect(route('materi.index'));
     }
 }

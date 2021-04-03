@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -51,17 +50,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *      )
  * )
  */
-class Materi extends Model
+class Materi extends BaseModel
 {
     use SoftDeletes;
 
     use HasFactory;
 
     public $table = 'materis';
-    
+
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -97,5 +95,16 @@ class Materi extends Model
         'keterangan' => 'required'
     ];
 
-    
+    const JENIS = [
+        1   => 'Materi',
+        2   => 'Pelajaran',
+    ];
+
+    public function role(){
+        return $this->belongsTo(Role::class, 'role_id','id');
+    }
+
+    public function getDisplayTypeAttribute() {
+        return Self::JENIS[$this->type] ?? '-';
+    }
 }
