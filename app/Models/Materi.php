@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @SWG\Definition(
- *      definition="Role",
- *      required={"nama", "keterangan"},
+ *      definition="Materi",
+ *      required={"role_id", "type", "judul", "keterangan"},
  *      @SWG\Property(
  *          property="id",
  *          description="id",
@@ -17,8 +17,25 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *          format="int32"
  *      ),
  *      @SWG\Property(
- *          property="nama",
- *          description="nama",
+ *          property="role_id",
+ *          description="role_id",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="type",
+ *          description="type",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="gambar",
+ *          description="gambar",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="judul",
+ *          description="judul",
  *          type="string"
  *      ),
  *      @SWG\Property(
@@ -40,13 +57,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *      )
  * )
  */
-class Role extends Model
+class Materi extends Model
 {
     use SoftDeletes;
 
     use HasFactory;
 
-    public $table = 'roles';
+    public $table = 'materis';
 
 
     protected $dates = ['deleted_at'];
@@ -54,7 +71,10 @@ class Role extends Model
 
 
     public $fillable = [
-        'nama',
+        'role_id',
+        'type',
+        'gambar',
+        'judul',
         'keterangan'
     ];
 
@@ -65,7 +85,10 @@ class Role extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'nama' => 'string',
+        'role_id' => 'integer',
+        'type' => 'integer',
+        'gambar' => 'string',
+        'judul' => 'string',
         'keterangan' => 'string'
     ];
 
@@ -75,11 +98,14 @@ class Role extends Model
      * @var array
      */
     public static $rules = [
-        'nama' => 'required',
+        'role_id' => 'required',
+        'type' => 'required',
+        'judul' => 'required',
         'keterangan' => 'required'
     ];
 
-    public function materi(){
-        return $this->hasMany(Materi::class, 'id','id');
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 }

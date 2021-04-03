@@ -27,3 +27,5 @@ Route::get('/home', [
 
 
 Route::resource('roles', App\Http\Controllers\RoleController::class);
+
+Route::resource('materis', App\Http\Controllers\MateriController::class);

@@ -20,3 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::resource('roles', App\Http\Controllers\API\RoleAPIController::class);
+
+Route::resource('materis', App\Http\Controllers\API\MateriAPIController::class);

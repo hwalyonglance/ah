@@ -6,3 +6,11 @@
 </li>
 
 
+<li class="nav-item">
+    <a href="{{ route('materis.index') }}"
+       class="nav-link {{ Request::is('materis*') ? 'active' : '' }}">
+        <p>Materis</p>
+    </a>
+</li>
+
+
