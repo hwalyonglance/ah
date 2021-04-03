@@ -17,17 +17,17 @@
 
         <div class="card">
 
-            {!! Form::model($materi, ['route' => ['materis.update', $materi->id], 'method' => 'patch', 'files' => true]) !!}
+            {!! Form::model($materi, ['route' => ['materi.update', $materi->id], 'method' => 'patch', 'files' => true]) !!}
 
             <div class="card-body">
                 <div class="row">
-                    @include('materis.fields')
+                    @include('materi.fields')
                 </div>
             </div>
 
             <div class="card-footer">
                 {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('materis.index') }}" class="btn btn-default">Cancel</a>
+                <a href="{{ route('materi.index') }}" class="btn btn-default">Cancel</a>
             </div>
 
            {!! Form::close() !!}

@@ -35,7 +35,7 @@ class MateriController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $materis = $this->materiRepository->all();
+        $materis = $this->materiRepository->all([],['role']);
 
         return view('materi.index')
             ->with('materis', $materis);
