@@ -8,7 +8,7 @@ use App\Repositories\BaseRepository;
 /**
  * Class RoleRepository
  * @package App\Repositories
- * @version April 3, 2021, 1:53 pm UTC
+ * @version April 3, 2021, 1:54 pm UTC
 */
 
 class RoleRepository extends BaseRepository
@@ -17,7 +17,10 @@ class RoleRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'nama',
+        'role_id',
+        'type',
+        'gambar',
+        'judul',
         'keterangan'
     ];
 

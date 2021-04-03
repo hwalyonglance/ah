@@ -1,7 +1,25 @@
-<!-- Nama Field -->
+<!-- Role Id Field -->
 <div class="col-sm-12">
-    {!! Form::label('nama', 'Nama:') !!}
-    <p>{{ $role->nama }}</p>
+    {!! Form::label('role_id', 'Role Id:') !!}
+    <p>{{ $role->role_id }}</p>
+</div>
+
+<!-- Type Field -->
+<div class="col-sm-12">
+    {!! Form::label('type', 'Type:') !!}
+    <p>{{ $role->type }}</p>
+</div>
+
+<!-- Gambar Field -->
+<div class="col-sm-12">
+    {!! Form::label('gambar', 'Gambar:') !!}
+    <p>{{ $role->gambar }}</p>
+</div>
+
+<!-- Judul Field -->
+<div class="col-sm-12">
+    {!! Form::label('judul', 'Judul:') !!}
+    <p>{{ $role->judul }}</p>
 </div>
 
 <!-- Keterangan Field -->

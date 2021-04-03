@@ -16,7 +16,10 @@ class RoleResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'nama' => $this->nama,
+            'role_id' => $this->role_id,
+            'type' => $this->type,
+            'gambar' => $this->gambar,
+            'judul' => $this->judul,
             'keterangan' => $this->keterangan,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at

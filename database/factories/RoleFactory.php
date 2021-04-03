@@ -22,7 +22,10 @@ class RoleFactory extends Factory
     public function definition()
     {
         return [
-            'nama' => $this->faker->word,
+            'role_id' => $this->faker->word,
+        'type' => $this->faker->word,
+        'gambar' => $this->faker->word,
+        'judul' => $this->faker->word,
         'keterangan' => $this->faker->word,
         'created_at' => $this->faker->date('Y-m-d H:i:s'),
         'updated_at' => $this->faker->date('Y-m-d H:i:s')
