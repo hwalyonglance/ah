@@ -29,10 +29,10 @@ class UserController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $akuns = $this->userRepository->all();
+        $users = $this->userRepository->all();
 
-        return view('akuns.index')
-            ->with('akuns', $akuns);
+        return view('users.index')
+            ->with('users', $users);
     }
 
     /**
@@ -42,7 +42,7 @@ class UserController extends AppBaseController
      */
     public function create()
     {
-        return view('akuns.create');
+        return view('users.create');
     }
 
     /**
@@ -56,11 +56,11 @@ class UserController extends AppBaseController
     {
         $input = $request->all();
 
-        $akun = $this->userRepository->create($input);
+        $user = $this->userRepository->create($input);
 
         Flash::success('User saved successfully.');
 
-        return redirect(route('akuns.index'));
+        return redirect(route('users.index'));
     }
 
     /**
@@ -72,15 +72,15 @@ class UserController extends AppBaseController
      */
     public function show($id)
     {
-        $akun = $this->userRepository->find($id);
+        $user = $this->userRepository->find($id);
 
-        if (empty($akun)) {
+        if (empty($user)) {
             Flash::error('User not found');
 
-            return redirect(route('akuns.index'));
+            return redirect(route('users.index'));
         }
 
-        return view('akuns.show')->with('akun', $akun);
+        return view('users.show')->with('user', $user);
     }
 
     /**
@@ -92,15 +92,15 @@ class UserController extends AppBaseController
      */
     public function edit($id)
     {
-        $akun = $this->userRepository->find($id);
+        $user = $this->userRepository->find($id);
 
-        if (empty($akun)) {
+        if (empty($user)) {
             Flash::error('User not found');
 
-            return redirect(route('akuns.index'));
+            return redirect(route('users.index'));
         }
 
-        return view('akuns.edit')->with('akun', $akun);
+        return view('users.edit')->with('user', $user);
     }
 
     /**
@@ -113,19 +113,19 @@ class UserController extends AppBaseController
      */
     public function update($id, UpdateUserRequest $request)
     {
-        $akun = $this->userRepository->find($id);
+        $user = $this->userRepository->find($id);
 
-        if (empty($akun)) {
+        if (empty($user)) {
             Flash::error('User not found');
 
-            return redirect(route('akuns.index'));
+            return redirect(route('users.index'));
         }
 
-        $akun = $this->userRepository->update($request->all(), $id);
+        $user = $this->userRepository->update($request->all(), $id);
 
         Flash::success('User updated successfully.');
 
-        return redirect(route('akuns.index'));
+        return redirect(route('users.index'));
     }
 
     /**
@@ -139,12 +139,12 @@ class UserController extends AppBaseController
      */
     public function destroy($id)
     {
-        $akun = $this->userRepository->find($id);
+        $user = $this->userRepository->find($id);
 
-        if (empty($akun)) {
+        if (empty($user)) {
             Flash::error('User not found');
 
-            return redirect(route('akuns.index'));
+            return redirect(route('users.index'));
         }
 
         $this->userRepository->delete($id);

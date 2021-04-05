@@ -17,7 +17,7 @@
 
         <div class="card">
 
-            {!! Form::model($akun, ['route' => ['users.update', $akun->id], 'method' => 'patch']) !!}
+            {!! Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'patch']) !!}
 
             <div class="card-body">
                 <div class="row">

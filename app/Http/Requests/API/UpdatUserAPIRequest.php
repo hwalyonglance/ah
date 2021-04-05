@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\Akun;
+use App\Models\User;
 use InfyOm\Generator\Request\APIRequest;
 
-class UpdateAkunAPIRequest extends APIRequest
+class UpdateUserAPIRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class UpdateAkunAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules = Akun::$rules;
-        
+        $rules = User::$rules;
+
         return $rules;
     }
 }
