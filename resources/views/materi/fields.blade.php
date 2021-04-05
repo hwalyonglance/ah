@@ -15,7 +15,7 @@
     {!! Form::label('gambar', 'Gambar:') !!}
     <div class="input-group">
         <div class="custom-file">
-            {!! Form::file('gambar', ['class' => 'custom-file-input']) !!}
+            <input class="custom-file-input" name="gambar" type="file" id="gambar" {{ isset($materi)?'':'required' }}>
             {!! Form::label('gambar', 'Choose file', ['class' => 'custom-file-label']) !!}
         </div>
     </div>
@@ -26,11 +26,11 @@
 <!-- Judul Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('judul', 'Judul:') !!}
-    {!! Form::text('judul', null, ['class' => 'form-control']) !!}
+    {!! Form::text('judul', null, ['class' => 'form-control','required'=>'required']) !!}
 </div>
 
 <!-- Keterangan Field -->
 <div class="form-group col-sm-12 col-lg-12">
     {!! Form::label('keterangan', 'Keterangan:') !!}
-    {!! Form::textarea('keterangan', null, ['class' => 'form-control']) !!}
+    {!! Form::textarea('keterangan', null, ['class' => 'form-control','required'=>'required']) !!}
 </div>

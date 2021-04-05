@@ -20,7 +20,8 @@ class UsersAddRole extends Migration
                     ->nullable()
                     ->index()
                     ->references('id')
-                    ->on('roles');
+                    ->on('roles')
+                    ->after('id');
             }
         );
     }

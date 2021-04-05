@@ -85,4 +85,29 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public static $rules = [
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'password' => ['required', 'string', 'min:8', 'confirmed'],
+    ];
+
+    public static $update_rules = [
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255'],
+        'password' => ['nullable','string', 'min:8', 'confirmed'],
+    ];
+
+    public function role() {
+        return $this->belongsTo(Role::class,'role_id')->withDefault(['nama'=>'-']);
+    }
+
+    public function getIsAdminAttribute(){
+        return $this->role_id == 1;
+    }
 }

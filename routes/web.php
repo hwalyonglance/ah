@@ -32,5 +32,4 @@ Route::resource('materi', App\Http\Controllers\MateriController::class);
 
 Route::resource('materi.bab', App\Http\Controllers\MateriBabController::class);
 
-
 Route::resource('users', App\Http\Controllers\UserController::class);

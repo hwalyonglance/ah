@@ -10,16 +10,10 @@
     <p>{{ $user->email }}</p>
 </div>
 
-<!-- Password Field -->
+<!-- Role Field -->
 <div class="col-sm-12">
-    {!! Form::label('password', 'Password:') !!}
-    <p>{{ $user->password }}</p>
-</div>
-
-<!-- Role Id Field -->
-<div class="col-sm-12">
-    {!! Form::label('role_id', 'Role Id:') !!}
-    <p>{{ $user->role_id }}</p>
+    {!! Form::label('role_id', 'Role:') !!}
+    <p>{{ $user->role->nama }}</p>
 </div>
 
 <!-- Created At Field -->

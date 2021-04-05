@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Repositories\UserRepository;
-use App\Http\Controllers\AppBaseController;
+use App\Repositories\RoleRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Flash;
 use Response;
 
@@ -15,9 +17,12 @@ class UserController extends AppBaseController
     /** @var  UserRepository */
     private $userRepository;
 
-    public function __construct(UserRepository $userRepo)
+    public function __construct(
+        UserRepository $userRepo,
+        RoleRepository $roleRepo)
     {
         $this->userRepository = $userRepo;
+        $this->roleRepository = $roleRepo;
     }
 
     /**
@@ -42,7 +47,8 @@ class UserController extends AppBaseController
      */
     public function create()
     {
-        return view('users.create');
+        $roles = $this->roleRepository->options();
+        return view('users.create', compact('roles'));
     }
 
     /**
@@ -55,7 +61,8 @@ class UserController extends AppBaseController
     public function store(CreateUserRequest $request)
     {
         $input = $request->all();
-
+        $input['password'] = Hash::make($input['password']);
+        // dd($input);
         $user = $this->userRepository->create($input);
 
         Flash::success('User saved successfully.');
@@ -100,7 +107,8 @@ class UserController extends AppBaseController
             return redirect(route('users.index'));
         }
 
-        return view('users.edit')->with('user', $user);
+        $roles = $this->roleRepository->options();
+        return view('users.edit', compact('user','roles'));
     }
 
     /**
@@ -121,7 +129,12 @@ class UserController extends AppBaseController
             return redirect(route('users.index'));
         }
 
-        $user = $this->userRepository->update($request->all(), $id);
+        $input = $request->all();
+        $input['password'] = Hash::make($input['password']);
+        $user->fill($input);
+        $user->save();
+        // dd(json_decode($user), $input);
+        // $user = $this->userRepository->update($request->all(), $id);
 
         Flash::success('User updated successfully.');
 

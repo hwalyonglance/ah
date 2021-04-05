@@ -2,7 +2,7 @@
     <table class="table" id="materis-table">
         <thead>
             <tr>
-                <th>Role Id</th>
+                <th>Role</th>
         <th>Type</th>
         <th>Gambar</th>
         <th>Judul</th>
