@@ -8,12 +8,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * @SWG\Definition(
  *      definition="MateriBab",
- *      required={"materi_id", "video", "keterangan"},
+ *      required={"materi_id", "judul", "video", "keterangan"},
  *      @SWG\Property(
  *          property="id",
  *          description="id",
  *          type="integer",
  *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="judul",
+ *          description="judul",
+ *          type="string"
  *      ),
  *      @SWG\Property(
  *          property="video",
@@ -54,6 +59,7 @@ class MateriBab extends BaseModel
 
     public $fillable = [
         'materi_id',
+        'judul',
         'video',
         'keterangan'
     ];
@@ -65,6 +71,7 @@ class MateriBab extends BaseModel
      */
     protected $casts = [
         'id' => 'integer',
+        'judul' => 'string',
         'video' => 'string',
         'keterangan' => 'string'
     ];
@@ -76,9 +83,12 @@ class MateriBab extends BaseModel
      */
     public static $rules = [
         'materi_id' => 'required',
+        'judul' => 'required',
         'video' => 'required',
         'keterangan' => 'required'
     ];
 
-
+    public function materi(){
+        return $this->belongsTo(Materi::class, 'materi_id');
+    }
 }

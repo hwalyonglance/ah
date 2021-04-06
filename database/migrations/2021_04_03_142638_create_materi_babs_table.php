@@ -17,6 +17,7 @@ class CreateMateriBabsTable extends Migration
         Schema::create('materi_babs', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('materi_id')->index();
+            $table->string('judul');
             $table->string('video');
             $table->string('keterangan');
             $table->timestamps();

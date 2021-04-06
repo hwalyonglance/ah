@@ -6,6 +6,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateMateriRequest;
 use App\Http\Requests\UpdateMateriRequest;
 use App\Repositories\MateriRepository;
+use App\Repositories\MateriBabRepository;
 use App\Repositories\RoleRepository;
 use Illuminate\Http\Request;
 use Flash;
@@ -18,11 +19,19 @@ class MateriController extends AppBaseController
     /** @var  MateriRepository */
     private $materiRepository;
 
+    /** @var  MateriBabRepository */
+    private $materiBabRepository;
+
+    /** @var  RoleRepository */
+    private $roleRepository;
+
     public function __construct(
         MateriRepository $materiRepo,
+        MateriBabRepository $materiBabRepo,
         RoleRepository $roleRepo)
     {
         $this->materiRepository = $materiRepo;
+        $this->materiBabRepository = $materiBabRepo;
         $this->roleRepository = $roleRepo;
     }
 

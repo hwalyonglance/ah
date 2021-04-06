@@ -17,6 +17,7 @@ class MateriBabResource extends JsonResource
         return [
             'id' => $this->id,
             'materi_id' => $this->materi_id,
+            'judul' => $this->judul,
             'video' => $this->video,
             'keterangan' => $this->keterangan,
             'created_at' => $this->created_at,

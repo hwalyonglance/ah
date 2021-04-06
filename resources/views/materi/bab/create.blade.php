@@ -17,19 +17,19 @@
 
         <div class="card">
 
-            {!! Form::open(['route' => 'materiBabs.store']) !!}
+            {!! Form::open(['route' => ['materi.bab.store', $materi_id]]) !!}
 
             <div class="card-body">
 
                 <div class="row">
-                    @include('materi_babs.fields')
+                    @include('materi.bab.fields')
                 </div>
 
             </div>
 
             <div class="card-footer">
                 {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('materiBabs.index') }}" class="btn btn-default">Cancel</a>
+                <a href="{{ route('materi.bab.index', $materi_id) }}" class="btn btn-default">Cancel</a>
             </div>
 
             {!! Form::close() !!}

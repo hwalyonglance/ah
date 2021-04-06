@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-sm-6">
                     <a class="btn btn-default float-right"
-                       href="{{ route('materiBabs.index') }}">
+                       href="{{ route('materi.bab.index', $materi->id) }}">
                         Back
                     </a>
                 </div>
@@ -22,7 +22,7 @@
 
             <div class="card-body">
                 <div class="row">
-                    @include('materi_babs.show_fields')
+                    @include('materi.bab.show_fields')
                 </div>
             </div>
 

@@ -24,6 +24,18 @@
         "inView": true
     },
     {
+        "name": "judul",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
         "name": "video",
         "dbType": "string",
         "htmlType": "text",

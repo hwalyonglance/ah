@@ -1,9 +1,12 @@
 <!-- Materi Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('materi_id', 'Materi Id:') !!}
-    {!! Form::select('materi_id', [1=>1,2=>2], null, ['class' => 'form-control custom-select']) !!}
-</div>
 
+{!! Form::hidden('materi_id', $materi_id, ['class' => 'form-control']) !!}
+
+<!-- Judul Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('judul', 'Judul:') !!}
+    {!! Form::text('judul', null, ['class' => 'form-control']) !!}
+</div>
 
 <!-- Video Field -->
 <div class="form-group col-sm-6">

@@ -1,13 +1,23 @@
 <!-- Materi Id Field -->
 <div class="col-sm-12">
-    {!! Form::label('materi_id', 'Materi Id:') !!}
-    <p>{{ $materiBab->materi_id }}</p>
+    {!! Form::label('materi_id', 'Materi:') !!}
+    <p>{{ $materi->judul }}</p>
+</div>
+
+<!-- Judul Field -->
+<div class="col-sm-12">
+    {!! Form::label('judul', 'Judul Bab:') !!}
+    <p>{{ $materiBab->judul }}</p>
 </div>
 
 <!-- Video Field -->
 <div class="col-sm-12">
     {!! Form::label('video', 'Video:') !!}
-    <p>{{ $materiBab->video }}</p>
+    <br>
+    <iframe width="400" height="250" src="https://www.youtube.com/embed/{{ $materiBab->video }}"
+        title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
 </div>
 
 <!-- Keterangan Field -->

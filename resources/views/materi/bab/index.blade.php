@@ -5,11 +5,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Materi Babs</h1>
+                    <h1>Materi Babs - {{ $materi->judul }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <a class="btn btn-primary float-right"
-                       href="{{ route('materiBabs.create') }}">
+                       href="{{ route('materi.bab.create', $materi_id) }}">
                         Add New
                     </a>
                 </div>
@@ -25,11 +25,11 @@
 
         <div class="card">
             <div class="card-body p-0">
-                @include('materi_babs.table')
+                @include('materi.bab.table')
 
                 <div class="card-footer clearfix float-right">
                     <div class="float-right">
-                        
+
                     </div>
                 </div>
             </div>

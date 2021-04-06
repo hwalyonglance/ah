@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateMateriBabRequest;
 use App\Http\Requests\UpdateMateriBabRequest;
+use App\Models\Materi;
+use App\Repositories\MateriRepository;
 use App\Repositories\MateriBabRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
@@ -12,12 +14,24 @@ use Response;
 
 class MateriBabController extends AppBaseController
 {
+    /** @var  Materi */
+    public $materi;
+
+    /** @var  MateriRepository */
+    private $materiRepository;
+
     /** @var  MateriBabRepository */
     private $materiBabRepository;
 
-    public function __construct(MateriBabRepository $materiBabRepo)
+    public function __construct(
+        MateriRepository $materiRepository,
+        MateriBabRepository $materiBabRepository
+    )
     {
-        $this->materiBabRepository = $materiBabRepo;
+        $this->materiRepository = $materiRepository;
+        $this->materiBabRepository = $materiBabRepository;
+        $materi_id = \Route::current()->parameter('materi');
+        $this->materi = $this->materiRepository->model->findOrFail($materi_id);
     }
 
     /**
@@ -27,12 +41,14 @@ class MateriBabController extends AppBaseController
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $materi_id)
     {
-        $materiBabs = $this->materiBabRepository->all();
+        // dd($materi_id);
+        $materiBabs = $this->materiBabRepository->all(['materi_id'=>$materi_id]);
 
-        return view('materi_babs.index')
-            ->with('materiBabs', $materiBabs);
+        $materi = $this->materi;
+
+        return view('materi.bab.index', compact('materiBabs','materi', 'materi_id'));
     }
 
     /**
@@ -40,9 +56,14 @@ class MateriBabController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
+    public function create($materi_id)
     {
-        return view('materi_babs.create');
+        $materis = $this->materiRepository->options('judul');
+
+        $materi = $this->materi;
+        // dd($materi);
+
+        return view('materi.bab.create', compact('materi_id', 'materi','materis'));
     }
 
     /**
@@ -52,7 +73,7 @@ class MateriBabController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreateMateriBabRequest $request)
+    public function store(CreateMateriBabRequest $request, $materi_id)
     {
         $input = $request->all();
 
@@ -60,7 +81,7 @@ class MateriBabController extends AppBaseController
 
         Flash::success('Materi Bab saved successfully.');
 
-        return redirect(route('materiBabs.index'));
+        return redirect(route('materi.bab.index', $materi_id));
     }
 
     /**
@@ -70,17 +91,19 @@ class MateriBabController extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
+    public function show($materi_id, $id)
     {
         $materiBab = $this->materiBabRepository->find($id);
 
         if (empty($materiBab)) {
             Flash::error('Materi Bab not found');
 
-            return redirect(route('materiBabs.index'));
+            return redirect(route('materi.bab.index',$materi_id));
         }
 
-        return view('materi_babs.show')->with('materiBab', $materiBab);
+        $materi = $this->materi;
+
+        return view('materi.bab.show', compact('materiBab', 'materi','materi_id'));
     }
 
     /**
@@ -100,7 +123,7 @@ class MateriBabController extends AppBaseController
             return redirect(route('materiBabs.index'));
         }
 
-        return view('materi_babs.edit')->with('materiBab', $materiBab);
+        return view('materi.bab.edit')->with('materiBab', $materiBab);
     }
 
     /**
