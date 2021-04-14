@@ -22,6 +22,15 @@
 
 @if($user->is_admin)
 <li class="nav-item">
+    <a href="{{ route('courseCategories.index') }}"
+       class="nav-link {{ Request::is('courseCategories*') ? 'active' : '' }}">
+        <p>Course Category</p>
+    </a>
+</li>
+@endif
+
+@if($user->is_admin)
+<li class="nav-item">
     <a href="{{ route('training.index') }}"
        class="nav-link {{ Request::is('training*') ? 'active' : '' }}">
         <p>Training</p>

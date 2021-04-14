@@ -33,3 +33,6 @@ Route::resource('training', App\Http\Controllers\TrainingController::class);
 Route::resource('training.chapter', App\Http\Controllers\TrainingChapterController::class);
 
 Route::resource('users', App\Http\Controllers\UserController::class);
+
+
+Route::resource('courseCategories', App\Http\Controllers\CourseCategoryController::class);

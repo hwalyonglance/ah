@@ -26,3 +26,6 @@ Route::resource('training', App\Http\Controllers\API\TrainingAPIController::clas
 Route::resource('training.chapter', App\Http\Controllers\API\TrainingChapterAPIController::class);
 
 Route::resource('users', App\Http\Controllers\API\UserAPIController::class);
+
+
+Route::resource('course_categories', App\Http\Controllers\API\CourseCategoryAPIController::class);
