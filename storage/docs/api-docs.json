@@ -6,13 +6,13 @@
     },
     "basePath": "/api/v1",
     "paths": {
-        "/materis": {
+        "/trainings": {
             "get": {
                 "tags": [
-                    "Materi"
+                    "Training"
                 ],
-                "summary": "Get a listing of the Materis.",
-                "description": "Get all Materis",
+                "summary": "Get a listing of the Trainings.",
+                "description": "Get all Trainings",
                 "produces": [
                     "application/json"
                 ],
@@ -27,7 +27,7 @@
                                 "data": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/definitions/Materi"
+                                        "$ref": "#/definitions/Training"
                                     }
                                 },
                                 "message": {
@@ -41,10 +41,10 @@
             },
             "post": {
                 "tags": [
-                    "Materi"
+                    "Training"
                 ],
-                "summary": "Store a newly created Materi in storage",
-                "description": "Store Materi",
+                "summary": "Store a newly created Training in storage",
+                "description": "Store Training",
                 "produces": [
                     "application/json"
                 ],
@@ -52,10 +52,10 @@
                     {
                         "name": "body",
                         "in": "body",
-                        "description": "Materi that should be stored",
+                        "description": "Training that should be stored",
                         "required": false,
                         "schema": {
-                            "$ref": "#/definitions/Materi"
+                            "$ref": "#/definitions/Training"
                         }
                     }
                 ],
@@ -68,7 +68,7 @@
                                     "type": "boolean"
                                 },
                                 "data": {
-                                    "$ref": "#/definitions/Materi"
+                                    "$ref": "#/definitions/Training"
                                 },
                                 "message": {
                                     "type": "string"
@@ -80,13 +80,13 @@
                 }
             }
         },
-        "/materis/{id}": {
+        "/trainings/{id}": {
             "get": {
                 "tags": [
-                    "Materi"
+                    "Training"
                 ],
-                "summary": "Display the specified Materi",
-                "description": "Get Materi",
+                "summary": "Display the specified Training",
+                "description": "Get Training",
                 "produces": [
                     "application/json"
                 ],
@@ -94,7 +94,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of Materi",
+                        "description": "id of Training",
                         "required": true,
                         "type": "integer"
                     }
@@ -108,7 +108,7 @@
                                     "type": "boolean"
                                 },
                                 "data": {
-                                    "$ref": "#/definitions/Materi"
+                                    "$ref": "#/definitions/Training"
                                 },
                                 "message": {
                                     "type": "string"
@@ -121,10 +121,10 @@
             },
             "put": {
                 "tags": [
-                    "Materi"
+                    "Training"
                 ],
-                "summary": "Update the specified Materi in storage",
-                "description": "Update Materi",
+                "summary": "Update the specified Training in storage",
+                "description": "Update Training",
                 "produces": [
                     "application/json"
                 ],
@@ -132,17 +132,17 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of Materi",
+                        "description": "id of Training",
                         "required": true,
                         "type": "integer"
                     },
                     {
                         "name": "body",
                         "in": "body",
-                        "description": "Materi that should be updated",
+                        "description": "Training that should be updated",
                         "required": false,
                         "schema": {
-                            "$ref": "#/definitions/Materi"
+                            "$ref": "#/definitions/Training"
                         }
                     }
                 ],
@@ -155,7 +155,7 @@
                                     "type": "boolean"
                                 },
                                 "data": {
-                                    "$ref": "#/definitions/Materi"
+                                    "$ref": "#/definitions/Training"
                                 },
                                 "message": {
                                     "type": "string"
@@ -168,10 +168,10 @@
             },
             "delete": {
                 "tags": [
-                    "Materi"
+                    "Training"
                 ],
-                "summary": "Remove the specified Materi from storage",
-                "description": "Delete Materi",
+                "summary": "Remove the specified Training from storage",
+                "description": "Delete Training",
                 "produces": [
                     "application/json"
                 ],
@@ -179,7 +179,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of Materi",
+                        "description": "id of Training",
                         "required": true,
                         "type": "integer"
                     }
@@ -208,10 +208,10 @@
         "/materiBabs": {
             "get": {
                 "tags": [
-                    "MateriBab"
+                    "TrainingChapter"
                 ],
-                "summary": "Get a listing of the MateriBabs.",
-                "description": "Get all MateriBabs",
+                "summary": "Get a listing of the TrainingChapters.",
+                "description": "Get all TrainingChapters",
                 "produces": [
                     "application/json"
                 ],
@@ -226,7 +226,7 @@
                                 "data": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/definitions/MateriBab"
+                                        "$ref": "#/definitions/TrainingChapter"
                                     }
                                 },
                                 "message": {
@@ -240,10 +240,10 @@
             },
             "post": {
                 "tags": [
-                    "MateriBab"
+                    "TrainingChapter"
                 ],
-                "summary": "Store a newly created MateriBab in storage",
-                "description": "Store MateriBab",
+                "summary": "Store a newly created TrainingChapter in storage",
+                "description": "Store TrainingChapter",
                 "produces": [
                     "application/json"
                 ],
@@ -251,10 +251,10 @@
                     {
                         "name": "body",
                         "in": "body",
-                        "description": "MateriBab that should be stored",
+                        "description": "TrainingChapter that should be stored",
                         "required": false,
                         "schema": {
-                            "$ref": "#/definitions/MateriBab"
+                            "$ref": "#/definitions/TrainingChapter"
                         }
                     }
                 ],
@@ -267,7 +267,7 @@
                                     "type": "boolean"
                                 },
                                 "data": {
-                                    "$ref": "#/definitions/MateriBab"
+                                    "$ref": "#/definitions/TrainingChapter"
                                 },
                                 "message": {
                                     "type": "string"
@@ -282,10 +282,10 @@
         "/materiBabs/{id}": {
             "get": {
                 "tags": [
-                    "MateriBab"
+                    "TrainingChapter"
                 ],
-                "summary": "Display the specified MateriBab",
-                "description": "Get MateriBab",
+                "summary": "Display the specified TrainingChapter",
+                "description": "Get TrainingChapter",
                 "produces": [
                     "application/json"
                 ],
@@ -293,7 +293,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of MateriBab",
+                        "description": "id of TrainingChapter",
                         "required": true,
                         "type": "integer"
                     }
@@ -307,7 +307,7 @@
                                     "type": "boolean"
                                 },
                                 "data": {
-                                    "$ref": "#/definitions/MateriBab"
+                                    "$ref": "#/definitions/TrainingChapter"
                                 },
                                 "message": {
                                     "type": "string"
@@ -320,10 +320,10 @@
             },
             "put": {
                 "tags": [
-                    "MateriBab"
+                    "TrainingChapter"
                 ],
-                "summary": "Update the specified MateriBab in storage",
-                "description": "Update MateriBab",
+                "summary": "Update the specified TrainingChapter in storage",
+                "description": "Update TrainingChapter",
                 "produces": [
                     "application/json"
                 ],
@@ -331,17 +331,17 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of MateriBab",
+                        "description": "id of TrainingChapter",
                         "required": true,
                         "type": "integer"
                     },
                     {
                         "name": "body",
                         "in": "body",
-                        "description": "MateriBab that should be updated",
+                        "description": "TrainingChapter that should be updated",
                         "required": false,
                         "schema": {
-                            "$ref": "#/definitions/MateriBab"
+                            "$ref": "#/definitions/TrainingChapter"
                         }
                     }
                 ],
@@ -354,7 +354,7 @@
                                     "type": "boolean"
                                 },
                                 "data": {
-                                    "$ref": "#/definitions/MateriBab"
+                                    "$ref": "#/definitions/TrainingChapter"
                                 },
                                 "message": {
                                     "type": "string"
@@ -367,10 +367,10 @@
             },
             "delete": {
                 "tags": [
-                    "MateriBab"
+                    "TrainingChapter"
                 ],
-                "summary": "Remove the specified MateriBab from storage",
-                "description": "Delete MateriBab",
+                "summary": "Remove the specified TrainingChapter from storage",
+                "description": "Delete TrainingChapter",
                 "produces": [
                     "application/json"
                 ],
@@ -378,7 +378,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "id of MateriBab",
+                        "description": "id of TrainingChapter",
                         "required": true,
                         "type": "integer"
                     }
@@ -605,7 +605,7 @@
         }
     },
     "definitions": {
-        "Materi": {
+        "Training": {
             "required": [
                 "role_id",
                 "type",
@@ -647,7 +647,7 @@
                 }
             }
         },
-        "MateriBab": {
+        "TrainingChapter": {
             "required": [
                 "materi_id",
                 "video",

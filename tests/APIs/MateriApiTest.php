@@ -4,9 +4,9 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\ApiTestTrait;
-use App\Models\Materi;
+use App\Models\Training;
 
-class MateriApiTest extends TestCase
+class TrainingApiTest extends TestCase
 {
     use ApiTestTrait, WithoutMiddleware, DatabaseTransactions;
 
@@ -15,11 +15,11 @@ class MateriApiTest extends TestCase
      */
     public function test_create_materi()
     {
-        $materi = Materi::factory()->make()->toArray();
+        $materi = Training::factory()->make()->toArray();
 
         $this->response = $this->json(
             'POST',
-            '/api/materis', $materi
+            '/api/trainings', $materi
         );
 
         $this->assertApiResponse($materi);
@@ -30,11 +30,11 @@ class MateriApiTest extends TestCase
      */
     public function test_read_materi()
     {
-        $materi = Materi::factory()->create();
+        $materi = Training::factory()->create();
 
         $this->response = $this->json(
             'GET',
-            '/api/materis/'.$materi->id
+            '/api/trainings/'.$materi->id
         );
 
         $this->assertApiResponse($materi->toArray());
@@ -45,16 +45,16 @@ class MateriApiTest extends TestCase
      */
     public function test_update_materi()
     {
-        $materi = Materi::factory()->create();
-        $editedMateri = Materi::factory()->make()->toArray();
+        $materi = Training::factory()->create();
+        $editedTraining = Training::factory()->make()->toArray();
 
         $this->response = $this->json(
             'PUT',
-            '/api/materis/'.$materi->id,
-            $editedMateri
+            '/api/trainings/'.$materi->id,
+            $editedTraining
         );
 
-        $this->assertApiResponse($editedMateri);
+        $this->assertApiResponse($editedTraining);
     }
 
     /**
@@ -62,17 +62,17 @@ class MateriApiTest extends TestCase
      */
     public function test_delete_materi()
     {
-        $materi = Materi::factory()->create();
+        $materi = Training::factory()->create();
 
         $this->response = $this->json(
             'DELETE',
-             '/api/materis/'.$materi->id
+             '/api/trainings/'.$materi->id
          );
 
         $this->assertApiSuccess();
         $this->response = $this->json(
             'GET',
-            '/api/materis/'.$materi->id
+            '/api/trainings/'.$materi->id
         );
 
         $this->response->assertStatus(404);

@@ -1,80 +1,80 @@
 <?php namespace Tests\Repositories;
 
-use App\Models\MateriBab;
-use App\Repositories\MateriBabRepository;
+use App\Models\TrainingChapter;
+use App\Repositories\TrainingChapterRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\ApiTestTrait;
 
-class MateriBabRepositoryTest extends TestCase
+class TrainingChapterRepositoryTest extends TestCase
 {
     use ApiTestTrait, DatabaseTransactions;
 
     /**
-     * @var MateriBabRepository
+     * @var TrainingChapterRepository
      */
     protected $materiBabRepo;
 
     public function setUp() : void
     {
         parent::setUp();
-        $this->materiBabRepo = \App::make(MateriBabRepository::class);
+        $this->materiBabRepo = \App::make(TrainingChapterRepository::class);
     }
 
     /**
      * @test create
      */
-    public function test_create_materi_bab()
+    public function test_create_materi_chapter()
     {
-        $materiBab = MateriBab::factory()->make()->toArray();
+        $materiBab = TrainingChapter::factory()->make()->toArray();
 
-        $createdMateriBab = $this->materiBabRepo->create($materiBab);
+        $createdTrainingChapter = $this->materiBabRepo->create($materiBab);
 
-        $createdMateriBab = $createdMateriBab->toArray();
-        $this->assertArrayHasKey('id', $createdMateriBab);
-        $this->assertNotNull($createdMateriBab['id'], 'Created MateriBab must have id specified');
-        $this->assertNotNull(MateriBab::find($createdMateriBab['id']), 'MateriBab with given id must be in DB');
-        $this->assertModelData($materiBab, $createdMateriBab);
+        $createdTrainingChapter = $createdTrainingChapter->toArray();
+        $this->assertArrayHasKey('id', $createdTrainingChapter);
+        $this->assertNotNull($createdTrainingChapter['id'], 'Created TrainingChapter must have id specified');
+        $this->assertNotNull(TrainingChapter::find($createdTrainingChapter['id']), 'TrainingChapter with given id must be in DB');
+        $this->assertModelData($materiBab, $createdTrainingChapter);
     }
 
     /**
      * @test read
      */
-    public function test_read_materi_bab()
+    public function test_read_materi_chapter()
     {
-        $materiBab = MateriBab::factory()->create();
+        $materiBab = TrainingChapter::factory()->create();
 
-        $dbMateriBab = $this->materiBabRepo->find($materiBab->id);
+        $dbTrainingChapter = $this->materiBabRepo->find($materiBab->id);
 
-        $dbMateriBab = $dbMateriBab->toArray();
-        $this->assertModelData($materiBab->toArray(), $dbMateriBab);
+        $dbTrainingChapter = $dbTrainingChapter->toArray();
+        $this->assertModelData($materiBab->toArray(), $dbTrainingChapter);
     }
 
     /**
      * @test update
      */
-    public function test_update_materi_bab()
+    public function test_update_materi_chapter()
     {
-        $materiBab = MateriBab::factory()->create();
-        $fakeMateriBab = MateriBab::factory()->make()->toArray();
+        $materiBab = TrainingChapter::factory()->create();
+        $fakeTrainingChapter = TrainingChapter::factory()->make()->toArray();
 
-        $updatedMateriBab = $this->materiBabRepo->update($fakeMateriBab, $materiBab->id);
+        $updatedTrainingChapter = $this->materiBabRepo->update($fakeTrainingChapter, $materiBab->id);
 
-        $this->assertModelData($fakeMateriBab, $updatedMateriBab->toArray());
-        $dbMateriBab = $this->materiBabRepo->find($materiBab->id);
-        $this->assertModelData($fakeMateriBab, $dbMateriBab->toArray());
+        $this->assertModelData($fakeTrainingChapter, $updatedTrainingChapter->toArray());
+        $dbTrainingChapter = $this->materiBabRepo->find($materiBab->id);
+        $this->assertModelData($fakeTrainingChapter, $dbTrainingChapter->toArray());
     }
 
     /**
      * @test delete
      */
-    public function test_delete_materi_bab()
+    public function test_delete_materi_chapter()
     {
-        $materiBab = MateriBab::factory()->create();
+        $materiBab = TrainingChapter::factory()->create();
 
         $resp = $this->materiBabRepo->delete($materiBab->id);
 
         $this->assertTrue($resp);
-        $this->assertNull(MateriBab::find($materiBab->id), 'MateriBab should not exist in DB');
+        $this->assertNull(TrainingChapter::find($materiBab->id), 'TrainingChapter should not exist in DB');
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\Materi;
+use App\Models\Training;
 use InfyOm\Generator\Request\APIRequest;
 
-class CreateMateriAPIRequest extends APIRequest
+class CreateTrainingAPIRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +24,6 @@ class CreateMateriAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return Materi::$rules;
+        return Training::$rules;
     }
 }

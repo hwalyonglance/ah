@@ -28,8 +28,8 @@ Route::get('/home', [
 
 Route::resource('roles', App\Http\Controllers\RoleController::class);
 
-Route::resource('materi', App\Http\Controllers\MateriController::class);
+Route::resource('training', App\Http\Controllers\TrainingController::class);
 
-Route::resource('materi.bab', App\Http\Controllers\MateriBabController::class);
+Route::resource('training.chapter', App\Http\Controllers\TrainingChapterController::class);
 
 Route::resource('users', App\Http\Controllers\UserController::class);

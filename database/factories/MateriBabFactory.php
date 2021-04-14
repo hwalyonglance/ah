@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\MateriBab;
+use App\Models\TrainingChapter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class MateriBabFactory extends Factory
+class TrainingChapterFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = MateriBab::class;
+    protected $model = TrainingChapter::class;
 
     /**
      * Define the model's default state.

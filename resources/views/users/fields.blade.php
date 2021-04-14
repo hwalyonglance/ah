@@ -1,6 +1,6 @@
 <!-- Role Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('role_id', 'Materi Untuk:') !!}
+    {!! Form::label('role_id', 'Training Untuk:') !!}
     {!! Form::select('role_id', $roles, null, ['class' => 'form-control custom-select', 'required'=>'required']) !!}
 </div>
 

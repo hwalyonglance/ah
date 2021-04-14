@@ -1,24 +1,24 @@
 <?php namespace Tests\Repositories;
 
-use App\Models\Materi;
-use App\Repositories\MateriRepository;
+use App\Models\Training;
+use App\Repositories\TrainingRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\ApiTestTrait;
 
-class MateriRepositoryTest extends TestCase
+class TrainingRepositoryTest extends TestCase
 {
     use ApiTestTrait, DatabaseTransactions;
 
     /**
-     * @var MateriRepository
+     * @var TrainingRepository
      */
     protected $materiRepo;
 
     public function setUp() : void
     {
         parent::setUp();
-        $this->materiRepo = \App::make(MateriRepository::class);
+        $this->materiRepo = \App::make(TrainingRepository::class);
     }
 
     /**
@@ -26,15 +26,15 @@ class MateriRepositoryTest extends TestCase
      */
     public function test_create_materi()
     {
-        $materi = Materi::factory()->make()->toArray();
+        $materi = Training::factory()->make()->toArray();
 
-        $createdMateri = $this->materiRepo->create($materi);
+        $createdTraining = $this->materiRepo->create($materi);
 
-        $createdMateri = $createdMateri->toArray();
-        $this->assertArrayHasKey('id', $createdMateri);
-        $this->assertNotNull($createdMateri['id'], 'Created Materi must have id specified');
-        $this->assertNotNull(Materi::find($createdMateri['id']), 'Materi with given id must be in DB');
-        $this->assertModelData($materi, $createdMateri);
+        $createdTraining = $createdTraining->toArray();
+        $this->assertArrayHasKey('id', $createdTraining);
+        $this->assertNotNull($createdTraining['id'], 'Created Training must have id specified');
+        $this->assertNotNull(Training::find($createdTraining['id']), 'Training with given id must be in DB');
+        $this->assertModelData($materi, $createdTraining);
     }
 
     /**
@@ -42,12 +42,12 @@ class MateriRepositoryTest extends TestCase
      */
     public function test_read_materi()
     {
-        $materi = Materi::factory()->create();
+        $materi = Training::factory()->create();
 
-        $dbMateri = $this->materiRepo->find($materi->id);
+        $dbTraining = $this->materiRepo->find($materi->id);
 
-        $dbMateri = $dbMateri->toArray();
-        $this->assertModelData($materi->toArray(), $dbMateri);
+        $dbTraining = $dbTraining->toArray();
+        $this->assertModelData($materi->toArray(), $dbTraining);
     }
 
     /**
@@ -55,14 +55,14 @@ class MateriRepositoryTest extends TestCase
      */
     public function test_update_materi()
     {
-        $materi = Materi::factory()->create();
-        $fakeMateri = Materi::factory()->make()->toArray();
+        $materi = Training::factory()->create();
+        $fakeTraining = Training::factory()->make()->toArray();
 
-        $updatedMateri = $this->materiRepo->update($fakeMateri, $materi->id);
+        $updatedTraining = $this->materiRepo->update($fakeTraining, $materi->id);
 
-        $this->assertModelData($fakeMateri, $updatedMateri->toArray());
-        $dbMateri = $this->materiRepo->find($materi->id);
-        $this->assertModelData($fakeMateri, $dbMateri->toArray());
+        $this->assertModelData($fakeTraining, $updatedTraining->toArray());
+        $dbTraining = $this->materiRepo->find($materi->id);
+        $this->assertModelData($fakeTraining, $dbTraining->toArray());
     }
 
     /**
@@ -70,11 +70,11 @@ class MateriRepositoryTest extends TestCase
      */
     public function test_delete_materi()
     {
-        $materi = Materi::factory()->create();
+        $materi = Training::factory()->create();
 
         $resp = $this->materiRepo->delete($materi->id);
 
         $this->assertTrue($resp);
-        $this->assertNull(Materi::find($materi->id), 'Materi should not exist in DB');
+        $this->assertNull(Training::find($materi->id), 'Training should not exist in DB');
     }
 }

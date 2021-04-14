@@ -4,22 +4,22 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\ApiTestTrait;
-use App\Models\MateriBab;
+use App\Models\TrainingChapter;
 
-class MateriBabApiTest extends TestCase
+class TrainingChapterApiTest extends TestCase
 {
     use ApiTestTrait, WithoutMiddleware, DatabaseTransactions;
 
     /**
      * @test
      */
-    public function test_create_materi_bab()
+    public function test_create_materi_chapter()
     {
-        $materiBab = MateriBab::factory()->make()->toArray();
+        $materiBab = TrainingChapter::factory()->make()->toArray();
 
         $this->response = $this->json(
             'POST',
-            '/api/materi_babs', $materiBab
+            '/api/materi_chapters', $materiBab
         );
 
         $this->assertApiResponse($materiBab);
@@ -28,13 +28,13 @@ class MateriBabApiTest extends TestCase
     /**
      * @test
      */
-    public function test_read_materi_bab()
+    public function test_read_materi_chapter()
     {
-        $materiBab = MateriBab::factory()->create();
+        $materiBab = TrainingChapter::factory()->create();
 
         $this->response = $this->json(
             'GET',
-            '/api/materi_babs/'.$materiBab->id
+            '/api/materi_chapters/'.$materiBab->id
         );
 
         $this->assertApiResponse($materiBab->toArray());
@@ -43,36 +43,36 @@ class MateriBabApiTest extends TestCase
     /**
      * @test
      */
-    public function test_update_materi_bab()
+    public function test_update_materi_chapter()
     {
-        $materiBab = MateriBab::factory()->create();
-        $editedMateriBab = MateriBab::factory()->make()->toArray();
+        $materiBab = TrainingChapter::factory()->create();
+        $editedTrainingChapter = TrainingChapter::factory()->make()->toArray();
 
         $this->response = $this->json(
             'PUT',
-            '/api/materi_babs/'.$materiBab->id,
-            $editedMateriBab
+            '/api/materi_chapters/'.$materiBab->id,
+            $editedTrainingChapter
         );
 
-        $this->assertApiResponse($editedMateriBab);
+        $this->assertApiResponse($editedTrainingChapter);
     }
 
     /**
      * @test
      */
-    public function test_delete_materi_bab()
+    public function test_delete_materi_chapter()
     {
-        $materiBab = MateriBab::factory()->create();
+        $materiBab = TrainingChapter::factory()->create();
 
         $this->response = $this->json(
             'DELETE',
-             '/api/materi_babs/'.$materiBab->id
+             '/api/materi_chapters/'.$materiBab->id
          );
 
         $this->assertApiSuccess();
         $this->response = $this->json(
             'GET',
-            '/api/materi_babs/'.$materiBab->id
+            '/api/materi_chapters/'.$materiBab->id
         );
 
         $this->response->assertStatus(404);

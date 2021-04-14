@@ -22,9 +22,9 @@
 
 @if($user->is_admin)
 <li class="nav-item">
-    <a href="{{ route('materi.index') }}"
-       class="nav-link {{ Request::is('materi*') ? 'active' : '' }}">
-        <p>Materi</p>
+    <a href="{{ route('training.index') }}"
+       class="nav-link {{ Request::is('training*') ? 'active' : '' }}">
+        <p>Training</p>
     </a>
 </li>
 @endif

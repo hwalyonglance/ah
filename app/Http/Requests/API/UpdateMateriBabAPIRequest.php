@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\MateriBab;
+use App\Models\TrainingChapter;
 use InfyOm\Generator\Request\APIRequest;
 
-class UpdateMateriBabAPIRequest extends APIRequest
+class UpdateTrainingChapterAPIRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class UpdateMateriBabAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules = MateriBab::$rules;
-        
+        $rules = TrainingChapter::$rules;
+
         return $rules;
     }
 }
