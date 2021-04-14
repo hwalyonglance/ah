@@ -28,11 +28,14 @@ Route::get('/home', [
 
 Route::resource('roles', App\Http\Controllers\RoleController::class);
 
-Route::resource('training', App\Http\Controllers\TrainingController::class);
-
-Route::resource('training.chapter', App\Http\Controllers\TrainingChapterController::class);
+Route::resource('courseCategories', App\Http\Controllers\CourseCategoryController::class);
 
 Route::resource('users', App\Http\Controllers\UserController::class);
 
+Route::resource('training', App\Http\Controllers\TrainingController::class);
+Route::resource('training.chapter', App\Http\Controllers\TrainingChapterController::class);
 
-Route::resource('courseCategories', App\Http\Controllers\CourseCategoryController::class);
+Route::resource('courses', App\Http\Controllers\CourseController::class);
+
+Route::resource('exams', App\Http\Controllers\ExamController::class);
+Route::resource('exams.questions', App\Http\Controllers\QuestionController::class);

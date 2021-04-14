@@ -16,7 +16,7 @@ class BaseModel extends Eloquent {
     }
 
     public static function options($display = 'nama') {
-        $record = Self::get();
+        $record = Self::all();
         $result = [];
         foreach ($record as $key => $value) {
             $result[$value->id] = $value->$display;

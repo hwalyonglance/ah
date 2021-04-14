@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @SWG\Definition(
- *      definition="CourseCategory",
- *      required={"name", "description"},
+ *      definition="Exam",
+ *      required={"role_id", "image_url", "title", "description"},
  *      @SWG\Property(
  *          property="id",
  *          description="id",
@@ -16,8 +16,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *          format="int32"
  *      ),
  *      @SWG\Property(
- *          property="name",
- *          description="name",
+ *          property="image_url",
+ *          description="image_url",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="title",
+ *          description="title",
  *          type="string"
  *      ),
  *      @SWG\Property(
@@ -39,13 +44,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *      )
  * )
  */
-class CourseCategory extends BaseModel
+class Exam extends BaseModel
 {
     use SoftDeletes;
 
     use HasFactory;
 
-    public $table = 'course_categories';
+    public $table = 'exams';
 
 
     protected $dates = ['deleted_at'];
@@ -53,7 +58,9 @@ class CourseCategory extends BaseModel
 
 
     public $fillable = [
-        'name',
+        'role_id',
+        'image_url',
+        'title',
         'description'
     ];
 
@@ -64,7 +71,8 @@ class CourseCategory extends BaseModel
      */
     protected $casts = [
         'id' => 'integer',
-        'name' => 'string',
+        'image_url' => 'string',
+        'title' => 'string',
         'description' => 'string'
     ];
 
@@ -74,9 +82,13 @@ class CourseCategory extends BaseModel
      * @var array
      */
     public static $rules = [
-        'name' => 'required',
+        'role_id' => 'required',
+        'image_url' => 'required',
+        'title' => 'required',
         'description' => 'required'
     ];
 
-
+    public function role() {
+        return $this->belongsTo(\App\Models\Role::class, 'role_id');
+    }
 }

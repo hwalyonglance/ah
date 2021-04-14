@@ -37,3 +37,17 @@
     </a>
 </li>
 @endif
+
+<li class="nav-item">
+    <a href="{{ route('courses.index') }}"
+       class="nav-link {{ Request::is('courses*') ? 'active' : '' }}">
+        <p>Courses</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('exams.index') }}"
+       class="nav-link {{ Request::is('exams*') ? 'active' : '' }}">
+        <p>Exams</p>
+    </a>
+</li>

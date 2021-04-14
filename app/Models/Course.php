@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @SWG\Definition(
- *      definition="CourseCategory",
- *      required={"name", "description"},
+ *      definition="Course",
+ *      required={"role_id", "category_id", "gambar", "title", "description"},
  *      @SWG\Property(
  *          property="id",
  *          description="id",
@@ -16,8 +16,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *          format="int32"
  *      ),
  *      @SWG\Property(
- *          property="name",
- *          description="name",
+ *          property="gambar",
+ *          description="gambar",
+ *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="title",
+ *          description="title",
  *          type="string"
  *      ),
  *      @SWG\Property(
@@ -39,13 +44,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *      )
  * )
  */
-class CourseCategory extends BaseModel
+class Course extends BaseModel
 {
     use SoftDeletes;
 
     use HasFactory;
 
-    public $table = 'course_categories';
+    public $table = 'courses';
 
 
     protected $dates = ['deleted_at'];
@@ -53,7 +58,10 @@ class CourseCategory extends BaseModel
 
 
     public $fillable = [
-        'name',
+        'role_id',
+        'category_id',
+        'gambar',
+        'title',
         'description'
     ];
 
@@ -64,7 +72,8 @@ class CourseCategory extends BaseModel
      */
     protected $casts = [
         'id' => 'integer',
-        'name' => 'string',
+        'gambar' => 'string',
+        'title' => 'string',
         'description' => 'string'
     ];
 
@@ -74,9 +83,18 @@ class CourseCategory extends BaseModel
      * @var array
      */
     public static $rules = [
-        'name' => 'required',
+        'role_id' => 'required',
+        'category_id' => 'required',
+        'gambar' => 'required',
+        'title' => 'required',
         'description' => 'required'
     ];
 
+    public function category() {
+        return $this->belongsTo(CourseCategory::class, 'category_id');
+    }
 
+    public function role() {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
 }

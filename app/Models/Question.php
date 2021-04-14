@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @SWG\Definition(
- *      definition="CourseCategory",
- *      required={"name", "description"},
+ *      definition="Question",
+ *      required={"exam_id", "question"},
  *      @SWG\Property(
  *          property="id",
  *          description="id",
@@ -16,13 +17,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *          format="int32"
  *      ),
  *      @SWG\Property(
- *          property="name",
- *          description="name",
- *          type="string"
- *      ),
- *      @SWG\Property(
- *          property="description",
- *          description="description",
+ *          property="question",
+ *          description="question",
  *          type="string"
  *      ),
  *      @SWG\Property(
@@ -39,13 +35,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *      )
  * )
  */
-class CourseCategory extends BaseModel
+class Question extends Model
 {
     use SoftDeletes;
 
     use HasFactory;
 
-    public $table = 'course_categories';
+    public $table = 'questions';
 
 
     protected $dates = ['deleted_at'];
@@ -53,8 +49,8 @@ class CourseCategory extends BaseModel
 
 
     public $fillable = [
-        'name',
-        'description'
+        'exam_id',
+        'question'
     ];
 
     /**
@@ -64,8 +60,7 @@ class CourseCategory extends BaseModel
      */
     protected $casts = [
         'id' => 'integer',
-        'name' => 'string',
-        'description' => 'string'
+        'question' => 'string'
     ];
 
     /**
@@ -74,9 +69,11 @@ class CourseCategory extends BaseModel
      * @var array
      */
     public static $rules = [
-        'name' => 'required',
-        'description' => 'required'
+        'exam_id' => 'required',
+        'question' => 'required'
     ];
 
-
+    public function exam() {
+        return $this->belongsTo(\App\Models\Exam::class, 'exam_id');
+    }
 }

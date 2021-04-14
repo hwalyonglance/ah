@@ -29,3 +29,9 @@ Route::resource('users', App\Http\Controllers\API\UserAPIController::class);
 
 
 Route::resource('course_categories', App\Http\Controllers\API\CourseCategoryAPIController::class);
+
+Route::resource('courses', App\Http\Controllers\API\CourseAPIController::class);
+
+Route::resource('exams', App\Http\Controllers\API\ExamAPIController::class);
+
+Route::resource('questions', App\Http\Controllers\API\QuestionAPIController::class);
