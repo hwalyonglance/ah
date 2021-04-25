@@ -46,9 +46,10 @@ class QuestionController extends AppBaseController
      */
     public function index(Request $request, $exam_id)
     {
-        $questions = $this->questionRepository->all();
+        $exam = $this->examRepository->find($exam_id);
+        $questions = $this->questionRepository->all(['exam_id'=>$exam_id]);
 
-        return view('exams.questions.index', compact('questions','exam_id'));
+        return view('exams.questions.index', compact('questions','exam','exam_id'));
     }
 
     /**

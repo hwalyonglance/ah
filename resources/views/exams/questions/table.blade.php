@@ -2,6 +2,7 @@
     <table class="table" id="questions-table">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Question</th>
                 <th colspan="3">Action</th>
             </tr>
@@ -9,6 +10,7 @@
         <tbody>
         @foreach($questions as $question)
             <tr>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $question->question }}</td>
                 <td width="120">
                     {!! Form::open(['url' => route('exams.questions.destroy',[$exam_id,$question->id]), 'method' => 'delete']) !!}

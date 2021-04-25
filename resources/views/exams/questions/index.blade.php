@@ -6,12 +6,16 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>Questions</h1>
+                    <br>
+                    <p>{{ $exam->title }}</p>
                 </div>
                 <div class="col-sm-6">
-                    <a class="btn btn-primary float-right"
-                       href="{{ route('exams.questions.create', $exam_id) }}">
-                        Add New
-                    </a>
+                    @if (count($questions) < 10)
+                        <a class="btn btn-primary float-right"
+                        href="{{ route('exams.questions.create', $exam_id) }}">
+                            Add New
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>
