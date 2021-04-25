@@ -1,3 +1,5 @@
+{{-- {{ dd( isset($course)?'':'required' ) }} --}}
+
 <!-- Role Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('role_id', 'Role:') !!}
@@ -17,7 +19,8 @@
     {!! Form::label('gambar', 'Gambar:') !!}
     <div class="input-group">
         <div class="custom-file">
-            {!! Form::file('gambar', ['class' => 'custom-file-input']) !!}
+            <input class="custom-file-input" name="gambar" type="file"
+                id="gambar" {{ isset($course)?'':'required' }}>
             {!! Form::label('gambar', 'Choose file', ['class' => 'custom-file-label']) !!}
         </div>
     </div>

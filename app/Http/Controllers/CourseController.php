@@ -74,6 +74,10 @@ class CourseController extends AppBaseController
     {
         $input = $request->all();
 
+        $gambar = $request->file('gambar');
+        $input['gambar'] = $gambar->store('uploads/course', 'public');
+        // return redirect(url($input['gambar']));
+
         $course = $this->courseRepository->create($input);
 
         Flash::success('Course saved successfully.');
@@ -117,8 +121,10 @@ class CourseController extends AppBaseController
 
             return redirect(route('courses.index'));
         }
+        $roles = $this->roleRepository->options('nama');
+        $categories = $this->courseCategoryRepo->options('name');
 
-        return view('courses.edit')->with('course', $course);
+        return view('courses.edit', compact('course', 'roles','categories'));
     }
 
     /**
@@ -139,7 +145,17 @@ class CourseController extends AppBaseController
             return redirect(route('courses.index'));
         }
 
-        $course = $this->courseRepository->update($request->all(), $id);
+        $input = $request->all();
+
+        if ($request->hasFile('gambar')) {
+            $gambar = $request->file('gambar');
+            $prev_gambar_path = storage_path('app/public/'.$course->gambar);
+            // dd($prev_gambar_path);
+            unlink($prev_gambar_path);
+            $input['gambar'] = $gambar->store('uploads/course', 'public');
+        }
+
+        $course = $this->courseRepository->update($input, $id);
 
         Flash::success('Course updated successfully.');
 

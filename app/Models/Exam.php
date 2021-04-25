@@ -83,7 +83,7 @@ class Exam extends BaseModel
      */
     public static $rules = [
         'role_id' => 'required',
-        'image_url' => 'required',
+        // 'image_url' => 'required',
         'title' => 'required',
         'description' => 'required'
     ];

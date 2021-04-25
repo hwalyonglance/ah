@@ -15,7 +15,10 @@
             <tr>
                 <td>{{ $course->role->nama }}</td>
                 <td>{{ $course->category->name }}</td>
-                <td>{{ $course->gambar }}</td>
+                <td>
+                    <img src="{{ url('storage/'.$course->gambar) }}" alt=""
+                    style="max-height: 150px; max-width: 150px;">
+                </td>
                 <td>{{ $course->title }}</td>
                 <td>{{ $course->description }}</td>
                 <td width="120">

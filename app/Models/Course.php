@@ -85,7 +85,6 @@ class Course extends BaseModel
     public static $rules = [
         'role_id' => 'required',
         'category_id' => 'required',
-        'gambar' => 'required',
         'title' => 'required',
         'description' => 'required'
     ];

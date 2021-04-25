@@ -13,7 +13,10 @@
         @foreach($trainings as $training)
             <tr>
                 <td>{{ $training->role->nama }}</td>
-                <td>{{ $training->gambar }}</td>
+                <td>
+                    <img src="{{ url('storage/'.$training->gambar) }}" alt=""
+                    style="max-height: 150px; max-width: 150px;">
+                </td>
                 <td>{{ $training->judul }}</td>
                 <td>{{ $training->keterangan }}</td>
                 <td width="120">

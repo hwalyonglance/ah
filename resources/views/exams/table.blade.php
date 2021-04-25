@@ -13,7 +13,10 @@
         @foreach($exams as $exam)
             <tr>
                 <td>{{ $exam->role->nama }}</td>
-                <td>{{ $exam->image_url }}</td>
+                <td>
+                    <img src="{{ url('storage/'.$exam->image_url) }}" alt=""
+                    style="max-height: 150px; max-width: 150px;">
+                </td>
                 <td>{{ $exam->title }}</td>
                 <td>{{ $exam->description }}</td>
                 <td width="120">

@@ -9,7 +9,8 @@
     {!! Form::label('gambar', 'Gambar:') !!}
     <div class="input-group">
         <div class="custom-file">
-            <input class="custom-file-input" name="gambar" type="file" id="gambar" {{ isset($training)?'':'required' }}>
+            <input class="custom-file-input" name="gambar" type="file"
+                id="gambar" {{ isset($training)?'':'required' }}>
             {!! Form::label('gambar', 'Choose file', ['class' => 'custom-file-label']) !!}
         </div>
     </div>

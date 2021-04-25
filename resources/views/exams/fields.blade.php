@@ -10,7 +10,8 @@
     {!! Form::label('image_url', 'Image Url:') !!}
     <div class="input-group">
         <div class="custom-file">
-            {!! Form::file('image_url', ['class' => 'custom-file-input']) !!}
+            <input class="custom-file-input" name="image_url" type="file"
+                id="image_url" {{ isset($exam)?'':'required' }}>
             {!! Form::label('image_url', 'Choose file', ['class' => 'custom-file-label']) !!}
         </div>
     </div>

@@ -65,6 +65,10 @@ class ExamController extends AppBaseController
     {
         $input = $request->all();
 
+        $gambar = $request->file('image_url');
+        $input['image_url'] = $gambar->store('uploads/exam', 'public');
+        // return redirect(url($input['image_url']));
+
         $exam = $this->examRepository->create($input);
 
         Flash::success('Exam saved successfully.');
@@ -131,7 +135,17 @@ class ExamController extends AppBaseController
             return redirect(route('exams.index'));
         }
 
-        $exam = $this->examRepository->update($request->all(), $id);
+        $input = $request->all();
+
+        if ($request->hasFile('image_url')) {
+            $image_url = $request->file('image_url');
+            $prev_gambar_path = storage_path('app/public/'.$exam->image_url);
+            // dd($prev_gambar_path);
+            unlink($prev_gambar_path);
+            $input['image_url'] = $image_url->store('uploads/exam', 'public');
+        }
+
+        $exam = $this->examRepository->update($input, $id);
 
         Flash::success('Exam updated successfully.');
 

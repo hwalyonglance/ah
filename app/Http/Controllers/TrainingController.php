@@ -73,6 +73,10 @@ class TrainingController extends AppBaseController
     {
         $input = $request->all();
 
+        $gambar = $request->file('gambar');
+        $input['gambar'] = $gambar->store('uploads/training', 'public');
+        // return redirect(url($input['gambar']));
+
         $training = $this->trainingRepository->create($input);
 
         Flash::success('Training saved successfully.');
@@ -140,7 +144,17 @@ class TrainingController extends AppBaseController
             return redirect(route('training.index'));
         }
 
-        $training = $this->trainingRepository->update($request->all(), $id);
+        $input = $request->all();
+
+        if ($request->hasFile('gambar')) {
+            $gambar = $request->file('gambar');
+            $prev_gambar_path = storage_path('app/public/'.$training->gambar);
+            // dd($prev_gambar_path);
+            unlink($prev_gambar_path);
+            $input['gambar'] = $gambar->store('uploads/training', 'public');
+        }
+
+        $training = $this->trainingRepository->update($input, $id);
 
         Flash::success('Training updated successfully.');
 
