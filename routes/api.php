@@ -35,3 +35,5 @@ Route::resource('courses', App\Http\Controllers\API\CourseAPIController::class);
 Route::resource('exams', App\Http\Controllers\API\ExamAPIController::class);
 
 Route::resource('questions', App\Http\Controllers\API\QuestionAPIController::class);
+
+Route::resource('question_options', App\Http\Controllers\API\QuestionOptionAPIController::class);

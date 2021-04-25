@@ -25,12 +25,12 @@ class QuestionController extends AppBaseController
     private $exam;
 
     public function __construct(
-        QuestionRepository $questionRepo,
-        ExamRepository $examRepo
+        ExamRepository $examRepo,
+        QuestionRepository $questionRepo
     )
     {
-        $this->questionRepository = $questionRepo;
         $this->examRepository = $examRepo;
+        $this->questionRepository = $questionRepo;
 
         $exam_id = \Route::current()->parameter('exam');
         $this->exam = $this->examRepository->model->findOrFail($exam_id);
@@ -46,7 +46,7 @@ class QuestionController extends AppBaseController
      */
     public function index(Request $request, $exam_id)
     {
-        $exam = $this->examRepository->find($exam_id);
+        $exam = $this->exam;
         $questions = $this->questionRepository->all(['exam_id'=>$exam_id]);
 
         return view('exams.questions.index', compact('questions','exam','exam_id'));
