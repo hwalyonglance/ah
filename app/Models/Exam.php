@@ -91,4 +91,8 @@ class Exam extends BaseModel
     public function role() {
         return $this->belongsTo(\App\Models\Role::class, 'role_id');
     }
+
+    public function questions() {
+        return $this->hasMany(Question::class, 'exam_id');
+    }
 }

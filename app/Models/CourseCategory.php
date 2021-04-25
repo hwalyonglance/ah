@@ -78,5 +78,7 @@ class CourseCategory extends BaseModel
         'description' => 'required'
     ];
 
-
+    public function courses(){
+        return $this->hasMany(Course::class, 'category_id');
+    }
 }

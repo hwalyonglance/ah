@@ -74,6 +74,10 @@ class Question extends Model
     ];
 
     public function exam() {
-        return $this->belongsTo(\App\Models\Exam::class, 'exam_id');
+        return $this->belongsTo(Exam::class, 'exam_id');
+    }
+
+    public function options() {
+        return $this->hasMany(QuestionOption::class, 'question_id');
     }
 }

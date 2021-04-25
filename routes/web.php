@@ -16,7 +16,8 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return redirect('/login');
 });
 
 Auth::routes();
@@ -24,7 +25,6 @@ Auth::routes();
 Route::get('/home', [
     HomeController::class, 'index'
 ])->name('home');
-
 
 Route::resource('roles', App\Http\Controllers\RoleController::class);
 

@@ -9,7 +9,7 @@ Ujian
 Crud soal Di dalam ujian
 
 Minus:
-Crud gambar
-Soal Belum bisa crud pilihan jawaban & atur jawaban benar
-Dashboard
+FIX Crud gambar
+FIX Soal Belum bisa crud pilihan jawaban & atur jawaban benar
+FIX Dashboard
 Halaman user selain admin
