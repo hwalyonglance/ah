@@ -10,10 +10,12 @@
                     <p>{{ $question->question }}</p>
                 </div>
                 <div class="col-sm-6">
-                    <a class="btn btn-primary float-right"
-                       href="{{ route('exams.questions.options.create', ['exam'=>$exam->id,'question'=>$question->id]) }}">
-                        Add New
-                    </a>
+                    @if (count($questionOptions) < 4)
+                        <a class="btn btn-primary float-right"
+                            href="{{ route('exams.questions.options.create', ['exam'=>$exam->id,'question'=>$question->id]) }}">
+                            Add New
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>

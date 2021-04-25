@@ -18,6 +18,7 @@ class CreateQuestionOptionsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('question_id')->index();
             $table->string('option');
+            $table->tinyInteger('status')->index()->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('question_id')->references('id')->on('questions');

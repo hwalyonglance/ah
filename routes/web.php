@@ -40,3 +40,4 @@ Route::resource('courses', App\Http\Controllers\CourseController::class);
 Route::resource('exams', App\Http\Controllers\ExamController::class);
 Route::resource('exams.questions', App\Http\Controllers\QuestionController::class);
 Route::resource('exams.questions.options', App\Http\Controllers\QuestionOptionController::class);
+Route::patch('exams/{exam}/questions/{question}/options/{option}/set-correct', [App\Http\Controllers\QuestionOptionController::class, 'setCorrect']);

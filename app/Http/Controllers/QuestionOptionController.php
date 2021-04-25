@@ -58,7 +58,7 @@ class QuestionOptionController extends AppBaseController
     {
         $exam = $this->exam;
         $question = $this->question;
-        $questionOptions = $this->questionOptionRepository->all();
+        $questionOptions = $this->questionOptionRepository->all(['question_id'=>$question_id]);
 
         return view('exams.questions.options.index', compact('exam','question','questionOptions'));
     }
@@ -178,6 +178,27 @@ class QuestionOptionController extends AppBaseController
         $this->questionOptionRepository->delete($option_id);
 
         Flash::success('Question Option deleted successfully.');
+
+        return redirect(route('exams.questions.options.index', ['exam'=>$exam_id, 'question'=>$question_id]));
+    }
+
+    public function setCorrect($exam_id, $question_id, $option_id) {
+        $questionOption = $this->questionOptionRepository->find($option_id);
+
+        if (empty($questionOption)) {
+            Flash::error('Question Option not found');
+
+            return redirect(route('questionOptions.index'));
+        }
+
+        $options = $this->questionOptionRepository->all();
+        $options->each(function($option) {
+            $option->status = 0;
+            $option->save();
+        });
+
+        $questionOption->status = 1;
+        $questionOption->save();
 
         return redirect(route('exams.questions.options.index', ['exam'=>$exam_id, 'question'=>$question_id]));
     }

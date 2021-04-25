@@ -5,6 +5,7 @@
     <table class="table" id="materiBabs-table">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Judul</th>
                 <th>Video</th>
                 <th>Keterangan</th>
@@ -14,6 +15,7 @@
         <tbody>
         @foreach($trainingChapters as $trainingChapter)
             <tr>
+                <td>{{ $loop->iteration }}</td>
                 <td>
                     {{ $trainingChapter->judul }}
                 </td>

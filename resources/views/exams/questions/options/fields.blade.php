@@ -1,5 +1,5 @@
 <!-- Question Id Field -->
-<input type="hidden" name="question_id" value='{{ $exam_id }}'>
+<input type="hidden" name="question_id" value='{{ $question_id }}'>
 
 
 <!-- Option Field -->

@@ -2,16 +2,18 @@
     <table class="table" id="trainings-table">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Role</th>
-        <th>Gambar</th>
-        <th>Judul</th>
-        <th>Keterangan</th>
+                <th>Gambar</th>
+                <th>Judul</th>
+                <th>Keterangan</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>
         <tbody>
         @foreach($trainings as $training)
             <tr>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $training->role->nama }}</td>
                 <td>
                     <img src="{{ url('storage/'.$training->gambar) }}" alt=""

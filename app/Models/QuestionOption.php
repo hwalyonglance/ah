@@ -22,6 +22,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *          type="string"
  *      ),
  *      @SWG\Property(
+ *          property="status",
+ *          description="status",
+ *          type="int4"
+ *      ),
+ *      @SWG\Property(
  *          property="created_at",
  *          description="created_at",
  *          type="string",

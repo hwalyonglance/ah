@@ -2,6 +2,7 @@
     <table class="table" id="exams-table">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Role</th>
                 <th>Image</th>
                 <th>Title</th>
@@ -12,6 +13,7 @@
         <tbody>
         @foreach($exams as $exam)
             <tr>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $exam->role->nama }}</td>
                 <td>
                     <img src="{{ url('storage/'.$exam->image_url) }}" alt=""

@@ -2,6 +2,7 @@
     <table class="table" id="users-table">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Role</th>
@@ -11,9 +12,10 @@
         <tbody>
         @foreach($users as $user)
             <tr>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $user->name }}</td>
-            <td>{{ $user->email }}</td>
-            <td>{{ $user->role->nama }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->role->nama }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

@@ -2,6 +2,7 @@
     <table class="table" id="courses-table">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Role</th>
                 <th>Category</th>
                 <th>Gambar</th>
@@ -13,6 +14,7 @@
         <tbody>
         @foreach($courses as $course)
             <tr>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $course->role->nama }}</td>
                 <td>{{ $course->category->name }}</td>
                 <td>

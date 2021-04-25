@@ -2,16 +2,18 @@
     <table class="table" id="courseCategories-table">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Name</th>
-        <th>Description</th>
+                <th>Description</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>
         <tbody>
         @foreach($courseCategories as $courseCategory)
             <tr>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $courseCategory->name }}</td>
-            <td>{{ $courseCategory->description }}</td>
+                <td>{{ $courseCategory->description }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['courseCategories.destroy', $courseCategory->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

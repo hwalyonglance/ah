@@ -3,7 +3,8 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Option</th>
+                <th>Pilihan</th>
+                <th>Status</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>
@@ -11,19 +12,29 @@
         @foreach($questionOptions as $questionOption)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-            <td>{{ $questionOption->option }}</td>
+                <td>{{ $questionOption->option }}</td>
+                <td>{{ $questionOption->status ? 'Benar': '' }}</td>
                 <td width="120">
-                    {!! Form::open(['url' => 'exams/'.$exam->id.'/questions/'.$question->id.'/options/'.$questionOption->id, 'method' => 'delete']) !!}
                     <div class='btn-group'>
+                        {!! Form::open([
+                            'url' => 'exams/'.$exam->id.'/questions/'.$question->id.'/options/'.$questionOption->id.'/set-correct',
+                            'method' => 'patch'
+                        ]) !!}
+                        {!! Form::button('<i class="fa fa-check"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        {!! Form::close() !!}
                         <a href="{{ route('exams.questions.options.show', ['exam'=>$exam->id,'question'=>$question->id,'option'=>$questionOption->id]) }}" class='btn btn-default btn-xs'>
                             <i class="far fa-eye"></i>
                         </a>
                         <a href="{{ route('exams.questions.options.edit', ['exam'=>$exam->id,'question'=>$question->id,'option'=>$questionOption->id]) }}" class='btn btn-default btn-xs'>
                             <i class="far fa-edit"></i>
                         </a>
+                        {!! Form::open([
+                            'url' => 'exams/'.$exam->id.'/questions/'.$question->id.'/options/'.$questionOption->id,
+                            'method' => 'delete'
+                        ]) !!}
                         {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        {!! Form::close() !!}
                     </div>
-                    {!! Form::close() !!}
                 </td>
             </tr>
         @endforeach
