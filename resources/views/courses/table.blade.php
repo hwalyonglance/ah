@@ -1,3 +1,4 @@
+
 <div class="table-responsive">
     <table class="table" id="courses-table">
         <thead>
@@ -29,10 +30,12 @@
                         <a href="{{ route('courses.show', [$course->id]) }}" class='btn btn-default btn-xs'>
                             <i class="far fa-eye"></i>
                         </a>
-                        <a href="{{ route('courses.edit', [$course->id]) }}" class='btn btn-default btn-xs'>
-                            <i class="far fa-edit"></i>
-                        </a>
-                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        @if($user->is_admin)
+                            <a href="{{ route('courses.edit', [$course->id]) }}" class='btn btn-default btn-xs'>
+                                <i class="far fa-edit"></i>
+                            </a>
+                            {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        @endif
                     </div>
                     {!! Form::close() !!}
                 </td>

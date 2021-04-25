@@ -1,7 +1,9 @@
 <!-- Gambar Field -->
 <div class="col-sm-12 col-lg-6">
     {!! Form::label('gambar', 'Gambar:') !!}
-    <p>{{ $training->gambar }}</p>
+    <br>
+    <img src="{{ url('storage/'.$training->gambar) }}" alt="" style="max-height: 300px ; max-width: 300px">
+    <br><br>
 </div>
 
 <!-- Role Id Field -->

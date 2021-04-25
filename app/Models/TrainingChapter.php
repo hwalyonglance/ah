@@ -16,6 +16,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *          format="int32"
  *      ),
  *      @SWG\Property(
+ *          property="training_id",
+ *          description="training_id",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *      @SWG\Property(
  *          property="judul",
  *          description="judul",
  *          type="string"

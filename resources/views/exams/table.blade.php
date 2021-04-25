@@ -27,13 +27,15 @@
                         <a href="{{ route('exams.show', [$exam->id]) }}" class='btn btn-default btn-xs'>
                             <i class="far fa-eye"></i>
                         </a>
-                        <a href="{{ route('exams.questions.index', [$exam->id]) }}" class='btn btn-default btn-xs'>
-                            <i class="fa fa-list"></i>
-                        </a>
-                        <a href="{{ route('exams.edit', [$exam->id]) }}" class='btn btn-default btn-xs'>
-                            <i class="far fa-edit"></i>
-                        </a>
-                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        @if($user->is_admin)
+                            <a href="{{ route('exams.questions.index', [$exam->id]) }}" class='btn btn-default btn-xs'>
+                                <i class="fa fa-list"></i>
+                            </a>
+                            <a href="{{ route('exams.edit', [$exam->id]) }}" class='btn btn-default btn-xs'>
+                                <i class="far fa-edit"></i>
+                            </a>
+                            {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        @endif
                     </div>
                     {!! Form::close() !!}
                 </td>

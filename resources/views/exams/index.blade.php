@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@php
+    $user = auth()->user();
+@endphp
+
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
@@ -8,10 +12,12 @@
                     <h1>Exams</h1>
                 </div>
                 <div class="col-sm-6">
-                    <a class="btn btn-primary float-right"
-                       href="{{ route('exams.create') }}">
-                        Add New
-                    </a>
+                    @if($user->is_admin)
+                        <a class="btn btn-primary float-right"
+                        href="{{ route('exams.create') }}">
+                            Add New
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -23,18 +29,21 @@
 
         <div class="clearfix"></div>
 
-        <div class="card">
-            <div class="card-body p-0">
-                @include('exams.table')
-
-                <div class="card-footer clearfix float-right">
-                    <div class="float-right">
-                        
+        @if($user->is_admin)
+            <div class="card">
+                <div class="card-body p-0">
+                    @include('exams.table')
+                    <div class="card-footer clearfix float-right">
+                        <div class="float-right">
+                        </div>
                     </div>
                 </div>
             </div>
-
-        </div>
+        @else
+            <div class="row">
+                @include('exams.card')
+            </div>
+        @endif
     </div>
 
 @endsection

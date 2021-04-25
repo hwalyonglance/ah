@@ -29,14 +29,12 @@
 </li>
 @endif
 
-@if($user->is_admin)
 <li class="nav-item">
     <a href="{{ route('training.index') }}"
        class="nav-link {{ Request::is('training*') ? 'active' : '' }}">
         <p>Training</p>
     </a>
 </li>
-@endif
 
 <li class="nav-item">
     <a href="{{ route('courses.index') }}"

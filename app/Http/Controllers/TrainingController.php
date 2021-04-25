@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
+use App\Repositories\TakeTrainingRepository;
 use App\Repositories\TrainingRepository;
 use App\Repositories\TrainingChapterRepository;
 use App\Repositories\RoleRepository;
@@ -16,6 +17,9 @@ use App\Models\Role;
 
 class TrainingController extends AppBaseController
 {
+    /** @var  TakeTrainingRepository */
+    private $takeTrainingRepository;
+
     /** @var  TrainingRepository */
     private $trainingRepository;
 
@@ -26,10 +30,12 @@ class TrainingController extends AppBaseController
     private $roleRepository;
 
     public function __construct(
+        TakeTrainingRepository $takeTrainingRepo,
         TrainingRepository $trainingRepo,
         TrainingChapterRepository $trainingChapterRepo,
-        RoleRepository $roleRepo)
-    {
+        RoleRepository $roleRepo
+    ) {
+        $this->takeTrainingRepository = $takeTrainingRepo;
         $this->trainingRepository = $trainingRepo;
         $this->trainingChapterRepository = $trainingChapterRepo;
         $this->roleRepository = $roleRepo;
@@ -185,5 +191,30 @@ class TrainingController extends AppBaseController
         Flash::success('Training deleted successfully.');
 
         return redirect(route('training.index'));
+    }
+
+    /**
+     * Remove the specified Training from storage.
+     *
+     * @param int $training_id
+     *
+     * @throws \Exception
+     *
+     * @return Response
+     */
+    public function take($training_id) {
+        $user = auth()->user();
+        // $takeTraining = TakeTraining::create();
+        $takeTraining = $this->takeTrainingRepository->create(
+            [
+                'user_id'      => $user->id,
+                'training_id'  => $training_id,
+                'status'       => 0
+            ]
+        );
+
+        Flash::success('Training berhasil diambil.');
+
+        return redirect(route('training.show', $training));
     }
 }
