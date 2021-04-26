@@ -26,7 +26,6 @@ class TakeTraining extends Migration
                     ->references('id')
                     ->on('users');
                 $table->tinyInteger('status')->index();
-                $table->softDeletes();
                 $table->timestamps();
             }
         );
@@ -39,6 +38,6 @@ class TakeTraining extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('take_trainings');
     }
 }
