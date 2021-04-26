@@ -26,6 +26,7 @@ class TakeTraining extends Migration
                     ->references('id')
                     ->on('users');
                 $table->tinyInteger('status')->index();
+                $table->softDeletes();
                 $table->timestamps();
             }
         );

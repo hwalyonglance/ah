@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateTrainingRequest;
+use App\Http\Requests\CreateTakeTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
 use App\Repositories\TakeTrainingRepository;
 use App\Repositories\TrainingRepository;
@@ -50,10 +51,32 @@ class TrainingController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $trainings = $this->trainingRepository->all([],['role']);
+        $user = auth()->user();
+        $trainings = [];
+        $trainingsTaken = [];
+        $search = [];
+        if (!$user->is_admin) {
+            $search['role_id'] = $user->role_id;
 
-        return view('training.index')
-            ->with('trainings', $trainings);
+            $trainingsTaken = $this->takeTrainingRepository
+                ->model
+                ->where('user_id', $user->id)
+                ->with('training')
+                ->get();
+            $trainings = $this->trainingRepository
+                ->model
+                ->where('role_id', $user->id)
+                ->whereNotIn('id', $trainingsTaken->pluck('id'))
+                ->get();
+            // dd(
+            //     json_decode($trainingsTaken),
+            //     json_decode($trainings)
+            // );
+        } else {
+            $trainings = $this->trainingRepository->all($search,['role']);
+        }
+
+        return view('training.index', compact('trainings', 'trainingsTaken'));
     }
 
     /**
@@ -64,7 +87,7 @@ class TrainingController extends AppBaseController
     public function create()
     {
         $roles = $this->roleRepository->options();
-        // dd($roles);
+        unset($roles[1]);
         return view('training.create', compact('roles'));
     }
 
@@ -99,15 +122,33 @@ class TrainingController extends AppBaseController
      */
     public function show($id)
     {
+        $user = auth()->user();
+        $chapters = [];
+        if (!$user->is_admin) {
+            $chapters = $this->trainingChapterRepository->all(
+                ['training_id'=>$id],
+                [],
+                null,
+                null,
+                ['id']
+            );
+            // dd(json_decode($chapters));
+            $firstChapter = $chapters->first();
+            return redirect(route('training.chapter.show',
+                [
+                    'training'  =>  $id,
+                    'chapter'   =>  $firstChapter->id
+                ]
+            ));
+        }
         $training = $this->trainingRepository->find($id);
 
         if (empty($training)) {
             Flash::error('Training not found');
-
             return redirect(route('training.index'));
         }
 
-        return view('training.show')->with('training', $training);
+        return view('training.show', compact('user', 'training', 'chapters'));
     }
 
     /**
@@ -128,6 +169,7 @@ class TrainingController extends AppBaseController
         }
 
         $roles = $this->roleRepository->options();
+        unset($roles[1]);
 
         return view('training.edit', compact('training', 'roles'));
     }
@@ -202,7 +244,7 @@ class TrainingController extends AppBaseController
      *
      * @return Response
      */
-    public function take($training_id) {
+    public function take($training_id, CreateTakeTrainingRequest $request) {
         $user = auth()->user();
         // $takeTraining = TakeTraining::create();
         $takeTraining = $this->takeTrainingRepository->create(
@@ -213,8 +255,25 @@ class TrainingController extends AppBaseController
             ]
         );
 
+        $chapters = $this->trainingChapterRepository->all(
+            ['training_id'=>$training_id],
+            [],
+            null,
+            null,
+            ['id']
+        );
+
+        $firstChapter = $chapters->first();
+
+        // dd(json_decode($takeTraining), json_decode($chapters));
+
         Flash::success('Training berhasil diambil.');
 
-        return redirect(route('training.show', $training));
+        return redirect(route('training.chapter.show',
+            [
+                'training'  =>  $training_id,
+                'chapter'   =>  $firstChapter->id
+            ]
+        ));
     }
 }

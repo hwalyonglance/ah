@@ -34,6 +34,7 @@ Route::resource('users', App\Http\Controllers\UserController::class);
 
 Route::resource('training', App\Http\Controllers\TrainingController::class);
 Route::resource('training.chapter', App\Http\Controllers\TrainingChapterController::class);
+Route::post('training/{training}/take', [App\Http\Controllers\TrainingController::class, 'take']);
 
 Route::resource('courses', App\Http\Controllers\CourseController::class);
 

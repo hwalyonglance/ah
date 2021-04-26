@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-sm-6">
                     <a class="btn btn-default float-right"
-                       href="{{ route('training.chapter.index', $trainingChapter->id) }}">
+                       href="{{ $user->is_admin ? route('training.chapter.index', $trainingChapter->id) : route('training.index') }}">
                         Back
                     </a>
                 </div>
@@ -18,14 +18,32 @@
     </section>
 
     <div class="content px-3">
-        <div class="card">
-
-            <div class="card-body">
-                <div class="row">
-                    @include('training.chapter.show_fields')
+        @if ($user->is_admin)
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        @include('training.chapter.show_fields')
+                    </div>
                 </div>
             </div>
-
-        </div>
+        @else
+            <div class="row">
+                <div class="col-3">
+                    <ul class="list-group">
+                        @foreach($chapters as $chapter)
+                            <li class="list-group-item">
+                                {{ $loop->iteration }}.
+                                <a href="{{ url('training/'.$chapter->training_id.'/chapter/'.$chapter->id) }}">{{ $chapter->judul }}</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="col-9">
+                    <iframe src="https://www.youtube.com/embed/{{ $chapter->video }}"
+                        allowfullscreen frameborder="0" height='450px' title=""  width="100%"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                </div>
+            </div>
+        @endif
     </div>
 @endsection

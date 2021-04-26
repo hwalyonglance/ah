@@ -43,8 +43,19 @@ class TrainingChapterController extends AppBaseController
      */
     public function index(Request $request, $training_id)
     {
+        $user = auth()->user();
         // dd($training_id);
         $trainingChapters = $this->trainingChapterRepository->all(['training_id'=>$training_id]);
+
+        if (!$user->is_admin) {
+            $firstChapter = $trainingChapters->first();
+            return redirect(route('training.chapter.show',
+                [
+                    'training'  =>  $training_id,
+                    'chapter'   =>  $firstChapter->id
+                ]
+            ));
+        }
 
         $training = $this->training;
 
@@ -93,6 +104,7 @@ class TrainingChapterController extends AppBaseController
      */
     public function show($training_id, $id)
     {
+        $user = auth()->user();
         $trainingChapter = $this->trainingChapterRepository->find($id);
 
         if (empty($trainingChapter)) {
@@ -103,7 +115,22 @@ class TrainingChapterController extends AppBaseController
 
         $training = $this->training;
 
-        return view('training.chapter.show', compact('trainingChapter', 'training','training_id'));
+        $chapters = [];
+
+        if (!$user->is_admin) {
+            $chapters = $this->trainingChapterRepository->all(['training_id'=>$training_id]);
+        }
+
+        return view(
+            'training.chapter.show',
+            compact(
+                'user',
+                'trainingChapter',
+                'training',
+                'training_id',
+                'chapters'
+            )
+        );
     }
 
     /**

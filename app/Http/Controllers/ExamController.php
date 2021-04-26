@@ -37,7 +37,12 @@ class ExamController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $exams = $this->examRepository->all([], ['role']);
+        $user = auth()->user();
+        $search = [];
+        if (!$user->is_admin) {
+            $search['role_id'] = $user->role_id;
+        }
+        $exams = $this->examRepository->all($search, ['role']);
 
         return view('exams.index')
             ->with('exams', $exams);
@@ -51,6 +56,7 @@ class ExamController extends AppBaseController
     public function create()
     {
         $roles = $this->roleRepository->options('nama');
+        unset($roles[1]);
         return view('exams.create', compact('roles'));
     }
 
@@ -113,6 +119,7 @@ class ExamController extends AppBaseController
             return redirect(route('exams.index'));
         }
         $roles = $this->roleRepository->options('nama');
+        unset($roles[1]);
 
         return view('exams.edit', compact('exam', 'roles'));
     }

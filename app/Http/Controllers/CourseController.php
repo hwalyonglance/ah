@@ -43,7 +43,12 @@ class CourseController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $courses = $this->courseRepository->all([], ['category','role']);
+        $user = auth()->user();
+        $search = [];
+        if (!$user->is_admin) {
+            $search['role_id'] = $user->role_id;
+        }
+        $courses = $this->courseRepository->all($search, ['category','role']);
 
         return view('courses.index')
             ->with('courses', $courses);
@@ -57,7 +62,7 @@ class CourseController extends AppBaseController
     public function create()
     {
         $roles = $this->roleRepository->options('nama');
-        // dd($roles);
+        unset($roles[1]);
         $categories = $this->courseCategoryRepo->options('name');
 
         return view('courses.create', compact('categories', 'roles'));
@@ -122,6 +127,7 @@ class CourseController extends AppBaseController
             return redirect(route('courses.index'));
         }
         $roles = $this->roleRepository->options('nama');
+        unset($roles[1]);
         $categories = $this->courseCategoryRepo->options('name');
 
         return view('courses.edit', compact('course', 'roles','categories'));
