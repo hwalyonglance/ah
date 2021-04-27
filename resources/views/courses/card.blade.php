@@ -13,7 +13,15 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $course->title }}</h5>
                         <p class="card-text">{{ $course->description }}</p>
-                        <a href="#" class="btn btn-primary">Ambil</a>
+                        {!! Form::open(['url' => url('course/'.$course->id.'/take'), 'method' => 'post']) !!}
+                            <input type="hidden" name="user_id" value="{{ $user->id }}">
+                            <input type="hidden" name="course_id" value="{{ $course->id }}">
+                            {!! Form::button('<i class="fa fa-arrow-circle-right"></i> &nbsp;Ambil', [
+                                    'type' => 'submit',
+                                    'class' => 'btn btn-primary',
+                                    'onclick' => "return confirm('Ambil Course ini?')"
+                            ]) !!}
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
@@ -33,7 +41,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ $item->course->title }}</h5>
                     <p class="card-text">{{ $item->course->description }}</p>
-                        <a class="btn btn-link" href='{{ url('course/'.$item->course->id) }}'>Lihat</a>
+                    <a class="btn btn-link" href='{{ url('course/'.$item->course->id) }}'>Lihat</a>
                 </div>
             </div>
         </div>

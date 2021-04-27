@@ -31,6 +31,9 @@
                             <i class="far fa-eye"></i>
                         </a>
                         @if($user->is_admin)
+                            <a href="{{ route('courses.chapter.index', [$course->id]) }}" class='btn btn-default btn-xs'>
+                                <i class="fa fa-list"></i>
+                            </a>
                             <a href="{{ route('courses.edit', [$course->id]) }}" class='btn btn-default btn-xs'>
                                 <i class="far fa-edit"></i>
                             </a>

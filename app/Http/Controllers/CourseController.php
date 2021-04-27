@@ -8,6 +8,7 @@ use App\Http\Requests\CreateTakeCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Repositories\TakeCourseRepository;
 use App\Repositories\CourseRepository;
+use App\Repositories\CourseChapterRepository;
 use App\Repositories\CourseCategoryRepository;
 use App\Repositories\RoleRepository;
 use Illuminate\Http\Request;
@@ -18,6 +19,9 @@ class CourseController extends AppBaseController
 {
     /** @var  CourseRepository */
     private $courseRepository;
+
+    /** @var  CourseChapterRepository */
+    private $courseChapterRepository;
 
     /** @var  CourseCategoryRepository */
     private $courseCategoryRepository;
@@ -31,11 +35,13 @@ class CourseController extends AppBaseController
     public function __construct(
         TakeCourseRepository $takeCourseRepo,
         CourseRepository $courseRepo,
+        CourseChapterRepository $courseChapterRepo,
         CourseCategoryRepository $courseCategoryRepository,
         RoleRepository $roleRepository
     )
     {
         $this->courseRepository         = $courseRepo;
+        $this->courseChapterRepository  = $courseChapterRepo;
         $this->courseCategoryRepository = $courseCategoryRepository;
         $this->roleRepository           = $roleRepository;
         $this->takeCourseRepository     = $takeCourseRepo;
@@ -149,6 +155,25 @@ class CourseController extends AppBaseController
      */
     public function show($id)
     {
+        $user = auth()->user();
+        $chapters = [];
+        if (!$user->is_admin) {
+            $chapters = $this->courseChapterRepository->all(
+                ['course_id'=>$id],
+                [],
+                null,
+                null,
+                ['id']
+            );
+            // dd(json_decode($chapters));
+            $firstChapter = $chapters->first();
+            return redirect(route('training.chapter.show',
+                [
+                    'training'  =>  $id,
+                    'chapter'   =>  $firstChapter->id
+                ]
+            ));
+        }
         $course = $this->courseRepository->find($id);
 
         if (empty($course)) {
@@ -255,6 +280,7 @@ class CourseController extends AppBaseController
      */
     public function take($course_id, CreateTakeCourseRequest $request) {
         $user = auth()->user();
+        // dd($course_id);
         // $takeCourse = TakeCourse::create();
         $takeCourse = $this->takeCourseRepository->create(
             [
@@ -278,7 +304,7 @@ class CourseController extends AppBaseController
 
         Flash::success('Course berhasil diambil.');
 
-        return redirect(route('course.chapter.show',
+        return redirect(route('courses.chapter.show',
             [
                 'course'   =>  $course_id,
                 'chapter'  =>  $firstChapter->id

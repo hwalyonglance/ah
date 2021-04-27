@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateTrainingChapterRequest;
 use App\Http\Requests\UpdateTrainingChapterRequest;
 use App\Models\Training;
 use App\Repositories\TrainingRepository;
 use App\Repositories\TrainingChapterRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
@@ -26,8 +26,7 @@ class TrainingChapterController extends AppBaseController
     public function __construct(
         TrainingRepository $trainingRepository,
         TrainingChapterRepository $trainingChapterRepository
-    )
-    {
+    ) {
         $this->trainingRepository = $trainingRepository;
         $this->trainingChapterRepository = $trainingChapterRepository;
         $training_id = \Route::current()->parameter('training');
@@ -44,7 +43,6 @@ class TrainingChapterController extends AppBaseController
     public function index(Request $request, $training_id)
     {
         $user = auth()->user();
-        // dd($training_id);
         $trainingChapters = $this->trainingChapterRepository->all(['training_id'=>$training_id]);
 
         if (!$user->is_admin) {
@@ -59,7 +57,10 @@ class TrainingChapterController extends AppBaseController
 
         $training = $this->training;
 
-        return view('training.chapter.index', compact('trainingChapters','training', 'training_id'));
+        return view(
+            'training.chapter.index',
+            compact('trainingChapters','training', 'training_id')
+        );
     }
 
     /**
@@ -69,12 +70,7 @@ class TrainingChapterController extends AppBaseController
      */
     public function create($training_id)
     {
-        $trainings = $this->trainingRepository->options('judul');
-
-        $training = $this->training;
-        // dd($training);
-
-        return view('training.chapter.create', compact('training_id', 'training','trainings'));
+        return view('training.chapter.create', compact('training_id'));
     }
 
     /**
@@ -150,9 +146,7 @@ class TrainingChapterController extends AppBaseController
             return redirect(route('training.chapter.index'));
         }
 
-        $training = $this->training;
-
-        return view('training.chapter.edit', compact('trainingChapter', 'training'));
+        return view('training.chapter.edit', compact('trainingChapter', 'training_id'));
     }
 
     /**

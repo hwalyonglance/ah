@@ -1,5 +1,5 @@
-<!-- Training Id Field -->
-{!! Form::hidden('training_id', $training_id, ['class' => 'form-control']) !!}
+<!-- Course Id Field -->
+{!! Form::hidden('course_id', $course_id, ['class' => 'form-control']) !!}
 
 <!-- Judul Field -->
 <div class="form-group col-sm-6">
