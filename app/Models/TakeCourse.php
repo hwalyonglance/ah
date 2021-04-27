@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @SWG\Definition(
- *      definition="TakeTraining",
- *      required={"role_id", "type", "judul", "keterangan"},
+ *      definition="TakeCourse",
+ *      required={"user_id", "training_id", "status"},
  *      @SWG\Property(
  *          property="id",
  *          description="id",
@@ -16,9 +16,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *          format="int32"
  *      ),
  *      @SWG\Property(
- *          property="gambar",
- *          description="gambar",
- *          type="integer"
+ *          property="user_id",
+ *          description="user_id",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="course_id",
+ *          description="course_id",
+ *          type="integer",
+ *          format="int32"
  *      ),
  *      @SWG\Property(
  *          property="created_at",
@@ -34,20 +41,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *      )
  * )
  */
-class TakeTraining extends BaseModel
+class TakeCourse extends BaseModel
 {
     use SoftDeletes;
 
     use HasFactory;
 
-    public $table = 'take_trainings';
-
+    public $table = 'take_courses';
 
     protected $dates = ['deleted_at'];
 
 
     public $fillable = [
-        'training_id',
+        'course_id',
         'user_id',
         'status',
     ];
@@ -68,11 +74,11 @@ class TakeTraining extends BaseModel
      * @var array
      */
     public static $rules = [
-        'training_id' => 'required',
+        'course_id' => 'required',
     ];
 
-    public function training() {
-        return $this->belongsTo(Training::class, 'training_id','id');
+    public function course() {
+        return $this->belongsTo(Course::class, 'course_id','id');
     }
 
     public function user() {

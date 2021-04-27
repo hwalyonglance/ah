@@ -18,6 +18,9 @@ use App\Models\Role;
 
 class TrainingController extends AppBaseController
 {
+    /** @var  RoleRepository */
+    private $roleRepository;
+
     /** @var  TakeTrainingRepository */
     private $takeTrainingRepository;
 
@@ -26,9 +29,6 @@ class TrainingController extends AppBaseController
 
     /** @var  TrainingChapterRepository */
     private $trainingChapterRepository;
-
-    /** @var  RoleRepository */
-    private $roleRepository;
 
     public function __construct(
         TakeTrainingRepository $takeTrainingRepo,
@@ -65,13 +65,9 @@ class TrainingController extends AppBaseController
                 ->get();
             $trainings = $this->trainingRepository
                 ->model
-                ->where('role_id', $user->id)
+                ->where('role_id', $user->role_id)
                 ->whereNotIn('id', $trainingsTaken->pluck('id'))
                 ->get();
-            // dd(
-            //     json_decode($trainingsTaken),
-            //     json_decode($trainings)
-            // );
         } else {
             $trainings = $this->trainingRepository->all($search,['role']);
         }

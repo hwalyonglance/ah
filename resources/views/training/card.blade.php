@@ -26,7 +26,7 @@
 <h4>Sudah Diambil</h4>
 <hr>
 <div class='row'>
-    @foreach($trainingsTaken as $item)
+    @forelse($trainingsTaken as $item)
         <div class='col-3'>
             <div class="card">
                 <img class="card-img-top" src="{{ url('storage/'.$item->training->gambar) }}"
@@ -38,5 +38,9 @@
                 </div>
             </div>
         </div>
-    @endforeach
+    @empty
+        <div class="col-12 text-center">
+            <p>Anda belum mengambil training</p>
+        </div>
+    @endforelse
 </div>

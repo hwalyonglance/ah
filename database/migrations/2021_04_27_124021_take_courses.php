@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TakeTraining extends Migration
+class TakeCourses extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,20 @@ class TakeTraining extends Migration
      */
     public function up()
     {
-        Schema::create(
-            'take_trainings',
-            function (Blueprint $table) {
-                $table->id();
-                $table->unsignedInteger('user_id')
+        Schema::create('take_courses', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger('user_id')
                     ->index()
                     ->references('id')
                     ->on('users');
-                $table->unsignedInteger('training_id')
+                $table->unsignedInteger('course_id')
                     ->index()
                     ->references('id')
-                    ->on('training');
+                    ->on('courses');
                 $table->tinyInteger('status')->index();
-                $table->timestamps();
-            }
-        );
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
     /**
@@ -38,6 +36,6 @@ class TakeTraining extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('take_trainings');
+        Schema::dropIfExists('take_courses');
     }
 }

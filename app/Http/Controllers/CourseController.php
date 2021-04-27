@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateCourseRequest;
+use App\Http\Requests\CreateTakeCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
+use App\Repositories\TakeCourseRepository;
 use App\Repositories\CourseRepository;
 use App\Repositories\CourseCategoryRepository;
 use App\Repositories\RoleRepository;
-use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
@@ -18,20 +20,25 @@ class CourseController extends AppBaseController
     private $courseRepository;
 
     /** @var  CourseCategoryRepository */
-    private $courseCategoryRepo;
+    private $courseCategoryRepository;
 
     /** @var  RoleRepository */
     private $roleRepository;
 
+    /** @var  TakeCourseRepository */
+    private $takeCourseRepository;
+
     public function __construct(
+        TakeCourseRepository $takeCourseRepo,
         CourseRepository $courseRepo,
-        CourseCategoryRepository $courseCategoryRepo,
+        CourseCategoryRepository $courseCategoryRepository,
         RoleRepository $roleRepository
     )
     {
-        $this->courseRepository = $courseRepo;
-        $this->courseCategoryRepo = $courseCategoryRepo;
-        $this->roleRepository = $roleRepository;
+        $this->courseRepository         = $courseRepo;
+        $this->courseCategoryRepository = $courseCategoryRepository;
+        $this->roleRepository           = $roleRepository;
+        $this->takeCourseRepository     = $takeCourseRepo;
     }
 
     /**
@@ -43,15 +50,58 @@ class CourseController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $user = auth()->user();
-        $search = [];
+        $user                    = auth()->user();
+        $courses                 = [];
+        $coursesGroupByCategory  = [];
+        $coursesTaken            = [];
+        $search                  = [];
         if (!$user->is_admin) {
             $search['role_id'] = $user->role_id;
-        }
-        $courses = $this->courseRepository->all($search, ['category','role']);
 
-        return view('courses.index')
-            ->with('courses', $courses);
+            $coursesTaken = $this->takeCourseRepository
+                ->model
+                ->where('user_id', $user->id)
+                ->with('course')
+                ->get();
+
+            $coursesGroupByCategory = $this->courseCategoryRepository
+                ->model
+                ->with(
+                    [
+                        'courses' => function ($with_courses) {
+
+                        }
+                    ]
+                )
+                ->whereHas(
+                    'courses',
+                    function ($where_courses)
+                    use ($user, $coursesTaken) {
+                        $where_courses
+                            ->where('role_id', $user->role_id)
+                            ->whereNotIn('id', $coursesTaken->pluck('id'));
+                    }
+                )
+                ->get();
+            // dd(
+            //     [
+            //         'coursesGroupByCategory' => json_decode($coursesGroupByCategory),
+            //         'coursesTaken'           => json_decode($coursesTaken),
+            //     ]
+            // );
+        } else {
+            $courses = $this->courseRepository->all($search, ['category','role']);
+        }
+
+        return view(
+            'courses.index',
+            compact(
+                'user',
+                'courses',
+                'coursesGroupByCategory',
+                'coursesTaken'
+            )
+        );
     }
 
     /**
@@ -63,7 +113,7 @@ class CourseController extends AppBaseController
     {
         $roles = $this->roleRepository->options('nama');
         unset($roles[1]);
-        $categories = $this->courseCategoryRepo->options('name');
+        $categories = $this->courseCategoryRepository->options('name');
 
         return view('courses.create', compact('categories', 'roles'));
     }
@@ -128,7 +178,7 @@ class CourseController extends AppBaseController
         }
         $roles = $this->roleRepository->options('nama');
         unset($roles[1]);
-        $categories = $this->courseCategoryRepo->options('name');
+        $categories = $this->courseCategoryRepository->options('name');
 
         return view('courses.edit', compact('course', 'roles','categories'));
     }
@@ -192,5 +242,47 @@ class CourseController extends AppBaseController
         Flash::success('Course deleted successfully.');
 
         return redirect(route('courses.index'));
+    }
+
+    /**
+     * Remove the specified Course from storage.
+     *
+     * @param int $course_id
+     *
+     * @throws \Exception
+     *
+     * @return Response
+     */
+    public function take($course_id, CreateTakeCourseRequest $request) {
+        $user = auth()->user();
+        // $takeCourse = TakeCourse::create();
+        $takeCourse = $this->takeCourseRepository->create(
+            [
+                'user_id'   => $user->id,
+                'course_id' => $course_id,
+                'status'    => 0
+            ]
+        );
+
+        $chapters = $this->courseChapterRepository->all(
+            ['course_id'=>$course_id],
+            [],
+            null,
+            null,
+            ['id']
+        );
+
+        $firstChapter = $chapters->first();
+
+        // dd(json_decode($takeCourse), json_decode($chapters));
+
+        Flash::success('Course berhasil diambil.');
+
+        return redirect(route('course.chapter.show',
+            [
+                'course'   =>  $course_id,
+                'chapter'  =>  $firstChapter->id
+            ]
+        ));
     }
 }
