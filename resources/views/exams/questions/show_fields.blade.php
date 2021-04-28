@@ -11,6 +11,12 @@
     <p>{{ $question->question }}</p>
 </div>
 
+<!-- Answer Field -->
+<div class="col-sm-12">
+    {!! Form::label('answer', 'Answer:') !!}
+    <p>{{ optional($question->answer)->option }}</p>
+</div>
+
 <!-- Created At Field -->
 <div class="col-sm-12">
     {!! Form::label('created_at', 'Created At:') !!}

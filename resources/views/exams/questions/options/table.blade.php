@@ -20,7 +20,8 @@
                             'url' => 'exams/'.$exam->id.'/questions/'.$question->id.'/options/'.$questionOption->id.'/set-correct',
                             'method' => 'patch'
                         ]) !!}
-                        {!! Form::button('<i class="fa fa-check"></i>', ['type' => 'submit', 'class' => 'btn btn-primary btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        <button type="submit" class="btn btn-primary btn-xs" {{ $questionOption->status ? 'disabled':'' }}
+                            onclick="return confirm('Are you sure?')"><i class="fa fa-check"></i></button>
                         {!! Form::close() !!}
                         <a href="{{ route('exams.questions.options.show', ['exam'=>$exam->id,'question'=>$question->id,'option'=>$questionOption->id]) }}" class='btn btn-default btn-xs'>
                             <i class="far fa-eye"></i>
@@ -32,7 +33,10 @@
                             'url' => 'exams/'.$exam->id.'/questions/'.$question->id.'/options/'.$questionOption->id,
                             'method' => 'delete'
                         ]) !!}
-                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        <button type="submit"
+                            class="btn btn-danger btn-xs" {{ $questionOption->status ? 'disabled':'' }} onclick="return confirm('Are you sure?')">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
                         {!! Form::close() !!}
                     </div>
                 </td>

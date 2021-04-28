@@ -10,6 +10,7 @@
                     alt="Card image cap" style="max-height: 250px; max-width: 100%;">
                 <div class="card-body">
                     <h5 class="card-title">{{ $training->judul }}</h5>
+                    <br><hr>
                     <p class="card-text">{{ $training->keterangan }}</p>
                     {!! Form::open(['url' => url('training/'.$training->id.'/take'), 'method' => 'post']) !!}
                         <input type="hidden" name="user_id" value="{{ $user->id }}">

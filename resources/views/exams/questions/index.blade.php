@@ -9,9 +9,13 @@
                     <br>
                     <p>{{ $exam->title }}</p>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6 text-right">
+                    <a class="btn btn-default"
+                        href="{{ route('exams.index') }}">
+                        Back
+                    </a>
                     @if (count($questions) < 10)
-                        <a class="btn btn-primary float-right"
+                        <a class="btn btn-primary "
                         href="{{ route('exams.questions.create', $exam_id) }}">
                             Add New
                         </a>

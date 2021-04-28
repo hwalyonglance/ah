@@ -9,9 +9,13 @@
                     <br>
                     <p>{{ $question->question }}</p>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6 text-right">
+                    <a class="btn btn-default"
+                        href="{{ route('exams.questions.index', ['exam'=>$exam->id]) }}">
+                        Back
+                    </a>
                     @if (count($questionOptions) < 4)
-                        <a class="btn btn-primary float-right"
+                        <a class="btn btn-primary"
                             href="{{ route('exams.questions.options.create', ['exam'=>$exam->id,'question'=>$question->id]) }}">
                             Add New
                         </a>

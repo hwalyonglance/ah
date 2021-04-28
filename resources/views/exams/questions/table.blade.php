@@ -4,6 +4,8 @@
             <tr>
                 <th>#</th>
                 <th>Question</th>
+                <th>Options</th>
+                <th>Answer</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>
@@ -12,6 +14,8 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $question->question }}</td>
+                <td>{{ $question->options->count() ?? 0 }}</td>
+                <td>{{ optional($question->answer)->option }}</td>
                 <td width="120">
                     {!! Form::open(['url' => route('exams.questions.destroy',[$exam_id,$question->id]), 'method' => 'delete']) !!}
                     <div class='btn-group'>

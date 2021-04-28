@@ -73,6 +73,12 @@ class Question extends Model
         'question' => 'required'
     ];
 
+    public function answer() {
+        return $this
+            ->hasOne(QuestionOption::class, 'question_id')
+            ->where('status', 1);
+    }
+
     public function exam() {
         return $this->belongsTo(Exam::class, 'exam_id');
     }

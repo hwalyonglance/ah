@@ -118,17 +118,25 @@ class QuestionOptionController extends AppBaseController
      *
      * @return Response
      */
-    public function edit($id)
+    public function edit($exam_id, $question_id, $option_id)
     {
-        $questionOption = $this->questionOptionRepository->find($id);
+        $questionOption = $this->questionOptionRepository->find($option_id);
 
         if (empty($questionOption)) {
             Flash::error('Question Option not found');
 
-            return redirect(route('questionOptions.index'));
+            return redirect(route('exams.questions.options.index', ['exam'=>$exam_id,'question'=>$question_id]));
         }
 
-        return view('exams.questions.options.edit')->with('questionOption', $questionOption);
+        return view(
+            'exams.questions.options.edit',
+            compact(
+                'exam_id',
+                'question_id',
+                'option_id',
+                'questionOption',
+            )
+        );
     }
 
     /**
@@ -139,21 +147,21 @@ class QuestionOptionController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateQuestionOptionRequest $request)
+    public function update($exam_id, $question_id, $id, UpdateQuestionOptionRequest $request)
     {
         $questionOption = $this->questionOptionRepository->find($id);
 
         if (empty($questionOption)) {
             Flash::error('Question Option not found');
 
-            return redirect(route('questionOptions.index'));
+            return redirect(route('exams.questions.options.index', ['exam'=>$exam_id,'question'=>$question_id]));
         }
 
         $questionOption = $this->questionOptionRepository->update($request->all(), $id);
 
         Flash::success('Question Option updated successfully.');
 
-        return redirect(route('questionOptions.index'));
+        return redirect(route('exams.questions.options.index', ['exam'=>$exam_id,'question'=>$question_id]));
     }
 
     /**
@@ -191,7 +199,8 @@ class QuestionOptionController extends AppBaseController
             return redirect(route('questionOptions.index'));
         }
 
-        $options = $this->questionOptionRepository->all();
+        $options = $this->questionOptionRepository
+            ->all(['question_id'=>$question_id]);
         $options->each(function($option) {
             $option->status = 0;
             $option->save();

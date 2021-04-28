@@ -47,7 +47,16 @@ class QuestionController extends AppBaseController
     public function index(Request $request, $exam_id)
     {
         $exam = $this->exam;
-        $questions = $this->questionRepository->all(['exam_id'=>$exam_id]);
+        $questions = $this->questionRepository
+            ->all(
+                ['exam_id'=>$exam_id],
+                [
+                    'options' => function ($with_option) {
+                        $with_option->select('question_id');
+                    },
+                    'answer'
+                ]
+            );
 
         return view('exams.questions.index', compact('questions','exam','exam_id'));
     }
@@ -89,7 +98,10 @@ class QuestionController extends AppBaseController
      */
     public function show($exam_id, $id)
     {
-        $question = $this->questionRepository->find($id);
+        $question = $this->questionRepository
+            ->model
+            ->with('answer')
+            ->find($id);
 
         if (empty($question)) {
             Flash::error('Question not found');

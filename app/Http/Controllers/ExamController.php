@@ -39,13 +39,52 @@ class ExamController extends AppBaseController
     {
         $user = auth()->user();
         $search = [];
+        $exams = [];
         if (!$user->is_admin) {
             $search['role_id'] = $user->role_id;
+            $exams = $this->examRepository
+                ->model
+                ->with(
+                    [
+                        'role',
+                        'questions.answer'
+                    ]
+                )
+                ->whereHas(
+                    'questions',
+                    function ($where_question) {
+                        $where_question
+                            ->whereHas(
+                                'options',
+                                null,
+                                '=',
+                                4
+                            )
+                            ->whereHas(
+                                'answer',
+                            );
+                    },
+                    '=',
+                    10
+                )
+                ->get();
+        } else {
+            $exams = $this->examRepository
+                ->all(
+                    $search,
+                    [
+                        'questions'=>function($with_questions){
+                            $with_questions->select('exam_id');
+                        }
+                    ]
+                );
         }
-        $exams = $this->examRepository->all($search, ['role']);
+        // dd(json_decode($exams));
 
-        return view('exams.index')
-            ->with('exams', $exams);
+        return view(
+            'exams.index',
+            compact('exams')
+        );
     }
 
     /**

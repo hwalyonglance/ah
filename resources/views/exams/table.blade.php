@@ -7,6 +7,7 @@
                 <th>Image</th>
                 <th>Title</th>
                 <th>Description</th>
+                <th>Questions</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>
@@ -21,6 +22,7 @@
                 </td>
                 <td>{{ $exam->title }}</td>
                 <td>{{ $exam->description }}</td>
+                <td>{{ $exam->questions->count() ?? 0 }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['exams.destroy', $exam->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

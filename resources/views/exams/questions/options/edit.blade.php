@@ -17,17 +17,23 @@
 
         <div class="card">
 
-            {!! Form::model($questionOption, ['route' => ['questionOptions.update', $questionOption->id], 'method' => 'patch']) !!}
+            {!! Form::model($questionOption, ['route' => [
+                'exams.questions.options.update', [
+                    'exam'=>$exam_id,
+                    'question'=>$question_id,
+                    'option'=>$option_id
+                ]
+            ], 'method' => 'patch']) !!}
 
             <div class="card-body">
                 <div class="row">
-                    @include('question_options.fields')
+                    @include('exams.questions.options.fields')
                 </div>
             </div>
 
             <div class="card-footer">
                 {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('questionOptions.index') }}" class="btn btn-default">Cancel</a>
+                <a href="{{ route('exams.questions.options.index', ['exam'=>$exam_id,'question'=>$question_id]) }}" class="btn btn-default">Cancel</a>
             </div>
 
            {!! Form::close() !!}
