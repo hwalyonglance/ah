@@ -232,7 +232,7 @@ class CourseController extends AppBaseController
             $gambar = $request->file('gambar');
             $prev_gambar_path = storage_path('app/public/'.$course->gambar);
             // dd($prev_gambar_path);
-            unlink($prev_gambar_path);
+            @unlink($prev_gambar_path);
             $input['gambar'] = $gambar->store('uploads/course', 'public');
         }
 

@@ -148,7 +148,7 @@ class ExamController extends AppBaseController
             $image_url = $request->file('image_url');
             $prev_gambar_path = storage_path('app/public/'.$exam->image_url);
             // dd($prev_gambar_path);
-            unlink($prev_gambar_path);
+            @unlink($prev_gambar_path);
             $input['image_url'] = $image_url->store('uploads/exam', 'public');
         }
 
