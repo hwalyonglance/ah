@@ -5,7 +5,9 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Exam Details</h1>
+                    <h1>Exam {{ $user->is_admin ? 'Details':'' }}</h1>
+                    <br>
+                    <p>{{ $exam->title }}</p>
                 </div>
                 <div class="col-sm-6">
                     <a class="btn btn-default float-right"
