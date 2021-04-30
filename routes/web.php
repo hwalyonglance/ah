@@ -41,6 +41,7 @@ Route::resource('courses.chapter', App\Http\Controllers\CourseChapterController:
 Route::post('course/{course}/take', [App\Http\Controllers\CourseController::class, 'take']);
 
 Route::resource('exams', App\Http\Controllers\ExamController::class);
+Route::post('exams/{exam}/take', [App\Http\Controllers\ExamController::class, 'take']);
 Route::resource('exams.questions', App\Http\Controllers\QuestionController::class);
 Route::resource('exams.questions.options', App\Http\Controllers\QuestionOptionController::class);
 Route::patch('exams/{exam}/questions/{question}/options/{option}/set-correct', [App\Http\Controllers\QuestionOptionController::class, 'setCorrect']);

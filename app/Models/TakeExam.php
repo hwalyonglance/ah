@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @SWG\Definition(
- *      definition="QuestionOption",
- *      required={"question_id", "option"},
+ *      definition="TakeExam",
+ *      required={"user_id", "exam_id", "status"},
  *      @SWG\Property(
  *          property="id",
  *          description="id",
@@ -17,14 +16,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *          format="int32"
  *      ),
  *      @SWG\Property(
- *          property="option",
- *          description="option",
- *          type="string"
+ *          property="user_id",
+ *          description="user_id",
+ *          type="integer",
+ *          format="int32"
  *      ),
  *      @SWG\Property(
- *          property="status",
- *          description="status",
- *          type="int4"
+ *          property="exam_id",
+ *          description="exam_id",
+ *          type="integer",
+ *          format="int32"
  *      ),
  *      @SWG\Property(
  *          property="created_at",
@@ -40,23 +41,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *      )
  * )
  */
-class QuestionOption extends Model
+class TakeExam extends BaseModel
 {
     use SoftDeletes;
 
     use HasFactory;
 
-    public $table = 'question_options';
-
+    public $table = 'take_exams';
 
     protected $dates = ['deleted_at'];
 
 
-
     public $fillable = [
-        'question_id',
-        'option',
-        'status'
+        'exam_id',
+        'user_id',
+        'status',
     ];
 
     /**
@@ -66,8 +65,7 @@ class QuestionOption extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'option' => 'string',
-        'status' => 'string'
+        'status' => 'integer',
     ];
 
     /**
@@ -76,11 +74,14 @@ class QuestionOption extends Model
      * @var array
      */
     public static $rules = [
-        'question_id' => 'required',
-        'option' => 'required'
+        'exam_id' => 'required',
     ];
 
-    public function question() {
-        return $this->belongsTo(Question::class, 'question_id');
+    public function exam() {
+        return $this->belongsTo(Exam::class, 'exam_id','id');
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id','id');
     }
 }

@@ -7,7 +7,10 @@
 <!-- Image Url Field -->
 <div class="col-sm-12">
     {!! Form::label('image_url', 'Image Url:') !!}
-    <p>{{ $exam->image_url }}</p>
+    <br>
+    <img src="{{ url('storage/'.$exam->image_url) }}" alt=""
+        style="max-height: 150px; max-width: 150px;">
+    <br><br>
 </div>
 
 <!-- Title Field -->

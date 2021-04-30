@@ -1,4 +1,4 @@
-{{-- {{ dd(json_decode($trainingsTaken)) }} --}}
+{{-- {{ dd(json_decode($examsTaken)) }} --}}
 
 <h4>Belum Diambil</h4>
 <hr>
@@ -12,9 +12,9 @@
                     <h5 class="card-title">{{ $exam->title }}</h5>
                     <br><hr>
                     <p class="card-text">{{ $exam->description }}</p>
-                    {!! Form::open(['url' => url('exam/'.$exam->id.'/take'), 'method' => 'post']) !!}
+                    {!! Form::open(['url' => url('exams/'.$exam->id.'/take'), 'method' => 'post']) !!}
                         <input type="hidden" name="user_id" value="{{ $user->id }}">
-                        <input type="hidden" name="training_id" value="{{ $exam->id }}">
+                        <input type="hidden" name="exam_id" value="{{ $exam->id }}">
                         {!! Form::button('<i class="fa fa-arrow-circle-right"></i> &nbsp;Ambil', ['type' => 'submit', 'class' => 'btn btn-primary', 'onclick' => "return confirm('Ambil exam ini?')"]) !!}
                     {!! Form::close() !!}
                 </div>
@@ -23,11 +23,11 @@
     @endforeach
 </div>
 
-{{-- <br>
+<br>
 <h4>Sudah Diambil</h4>
 <hr>
 <div class='row'>
-    @forelse($trainingsTaken as $item)
+    @forelse($examsTaken as $item)
         <div class='col-3'>
             <div class="card">
                 <img class="card-img-top" src="{{ url('storage/'.$item->exam->image_url) }}"
@@ -44,4 +44,4 @@
             <p>Anda belum mengambil exam</p>
         </div>
     @endforelse
-</div> --}}
+</div>

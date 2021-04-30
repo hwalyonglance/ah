@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TakeCourses extends Migration
+class TakeExams extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class TakeCourses extends Migration
      */
     public function up()
     {
-        Schema::create('take_courses', function (Blueprint $table) {
+        Schema::create('take_exams', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id')
                 ->index()
                 ->references('id')
                 ->on('users');
-            $table->unsignedInteger('course_id')
+            $table->unsignedInteger('exam_id')
                 ->index()
                 ->references('id')
-                ->on('courses');
+                ->on('exams');
             $table->tinyInteger('status')->index();
             $table->timestamps();
             $table->softDeletes();
@@ -36,6 +36,6 @@ class TakeCourses extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('take_courses');
+        Schema::dropIfExists('take_exams');
     }
 }

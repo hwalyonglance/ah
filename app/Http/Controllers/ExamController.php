@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateExamRequest;
+use App\Http\Requests\CreateTakeExamRequest;
 use App\Http\Requests\UpdateExamRequest;
+use App\Http\Requests\UpdateTakeExamRequest;
 use App\Repositories\ExamRepository;
+use App\Repositories\QuestionRepository;
 use App\Repositories\RoleRepository;
+use App\Repositories\TakeExamRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
@@ -16,16 +20,25 @@ class ExamController extends AppBaseController
     /** @var  ExamRepository */
     private $examRepository;
 
+    /** @var  QuestionRepository */
+    private $questionRepository;
+
     /** @var  RoleRepository */
     private $roleRepository;
 
+    /** @var  TakeExamRepository */
+    private $takeExamRepository;
+
     public function __construct(
         ExamRepository $examRepo,
-        RoleRepository $roleRepo
-    )
-    {
+        QuestionRepository $questionRepo,
+        RoleRepository $roleRepo,
+        TakeExamRepository $takeExamRepo
+    ) {
         $this->examRepository = $examRepo;
+        $this->questionRepository = $questionRepo;
         $this->roleRepository = $roleRepo;
+        $this->takeExamRepository = $takeExamRepo;
     }
 
     /**
@@ -38,10 +51,18 @@ class ExamController extends AppBaseController
     public function index(Request $request)
     {
         $user = auth()->user();
-        $search = [];
         $exams = [];
+        $examsTaken = [];
+        $search = [];
         if (!$user->is_admin) {
             $search['role_id'] = $user->role_id;
+
+            $examsTaken = $this->takeExamRepository
+                ->model
+                ->where('user_id', $user->id)
+                ->with('exam')
+                ->get();
+            // dd(json_decode($examsTaken));
             $exams = $this->examRepository
                 ->model
                 ->with(
@@ -83,7 +104,7 @@ class ExamController extends AppBaseController
 
         return view(
             'exams.index',
-            compact('exams')
+            compact('exams', 'examsTaken')
         );
     }
 
@@ -130,6 +151,18 @@ class ExamController extends AppBaseController
      */
     public function show($id)
     {
+        $user = auth()->user();
+        $questions = [];
+        if (!$user->is_admin) {
+            $questions = $this->questionRepository->all(
+                ['exam_id'=>$id],
+                ['options'],
+                null,
+                null,
+                ['id','question']
+            );
+            // dd(json_decode($questions));
+        }
         $exam = $this->examRepository->find($id);
 
         if (empty($exam)) {
@@ -138,7 +171,14 @@ class ExamController extends AppBaseController
             return redirect(route('exams.index'));
         }
 
-        return view('exams.show')->with('exam', $exam);
+        return view(
+            'exams.show',
+            compact(
+                'user',
+                'exam',
+                'questions',
+            )
+        );
     }
 
     /**
@@ -222,5 +262,36 @@ class ExamController extends AppBaseController
         Flash::success('Exam deleted successfully.');
 
         return redirect(route('exams.index'));
+    }
+
+    /**
+     * Take the specified Exam.
+     *
+     * @param int $exam_id
+     *
+     * @throws \Exception
+     *
+     * @return Response
+     */
+    public function take($exam_id, CreateTakeExamRequest $request) {
+        $user = auth()->user();
+        // dd($exam_id);
+        $takeExam = $this->takeExamRepository->create(
+            [
+                'user_id'   => $user->id,
+                'exam_id' => $exam_id,
+                'status'    => 0
+            ]
+        );
+
+        // dd(json_decode($takeExam), json_decode($chapters));
+
+        Flash::success('Exam berhasil diambil.');
+
+        return redirect(route('exams.show',
+            [
+                'exam'     =>  $exam_id,
+            ]
+        ));
     }
 }

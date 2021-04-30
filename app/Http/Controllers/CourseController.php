@@ -270,7 +270,7 @@ class CourseController extends AppBaseController
     }
 
     /**
-     * Remove the specified Course from storage.
+     * Take the specified Course.
      *
      * @param int $course_id
      *

@@ -40,9 +40,7 @@
                 </div>
             </div>
         @else
-            <div class="row">
-                @include('exams.card')
-            </div>
+            @include('exams.card')
         @endif
     </div>
 

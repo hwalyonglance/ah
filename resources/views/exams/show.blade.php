@@ -19,13 +19,32 @@
 
     <div class="content px-3">
         <div class="card">
-
             <div class="card-body">
-                <div class="row">
-                    @include('exams.show_fields')
-                </div>
+                @if ($user->is_admin)
+                    <div class="row">
+                        @include('exams.show_fields')
+                    </div>
+                @else
+                    @php
+                        $letterByIndex = [
+                            'A',
+                            'B',
+                            'C',
+                            'D',
+                        ];
+                    @endphp
+                    @foreach ($questions as $question)
+                        <p>{{ $loop->iteration }}. {{ $question->question }}</p>
+                        @foreach ($question->options as $option)
+                            <label class='ml-4 font-weight-normal'>
+                                <input type="radio" name="answer[{{ $question->id }}]">
+                                {{ $letterByIndex[$loop->index] }}. {{ $option->option }}
+                            </label>
+                            <br>
+                        @endforeach
+                    @endforeach
+                @endif
             </div>
-
         </div>
     </div>
 @endsection
