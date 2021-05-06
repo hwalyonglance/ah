@@ -84,4 +84,22 @@ class TakeExam extends BaseModel
     public function user() {
         return $this->belongsTo(User::class, 'user_id','id');
     }
+
+    public function answers() {
+        return $this->hasMany(QuestionAnswer::class, 'take_exam_id', 'id');
+    }
+
+    public function getScoreAttribute() {
+        $answers = $this->answers->pluck('answer_id', 'question_id');
+        $score = 0;
+        foreach ($this->exam->questions as $question) {
+            $score += $question->answer->id == $answers[$question->id];
+        }
+        // dd(
+        //     json_decode($this->exam->questions),
+        //     $answers,
+        //     $score
+        // );
+        return $score;
+    }
 }

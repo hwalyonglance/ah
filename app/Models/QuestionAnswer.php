@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @SWG\Definition(
- *      definition="QuestionOption",
- *      required={"question_id", "option"},
+ *      definition="Question",
+ *      required={"take_exam_id","question_id","answer_id"},
  *      @SWG\Property(
  *          property="id",
  *          description="id",
@@ -17,9 +17,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *          format="int32"
  *      ),
  *      @SWG\Property(
- *          property="option",
- *          description="option",
- *          type="string"
+ *          property="take_exam_id",
+ *          description="take_exam_id",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="question_id",
+ *          description="question_id",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="answer_id",
+ *          description="answer_id",
+ *          type="integer",
+ *          format="int32"
  *      ),
  *      @SWG\Property(
  *          property="status",
@@ -41,13 +54,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *      )
  * )
  */
-class QuestionOption extends Model
+class QuestionAnswer extends Model
 {
     use SoftDeletes;
 
     use HasFactory;
 
-    public $table = 'question_options';
+    public $table = 'question_answers';
 
 
     protected $dates = ['deleted_at'];
@@ -55,9 +68,10 @@ class QuestionOption extends Model
 
 
     public $fillable = [
+        'take_exam_id',
         'question_id',
-        'option',
-        'status'
+        'answer_id',
+        'status',
     ];
 
     /**
@@ -67,8 +81,9 @@ class QuestionOption extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'option' => 'string',
-        'status' => 'string'
+        'question_id' => 'integer',
+        'answer_id' => 'integer',
+        'status' => 'integer',
     ];
 
     /**
@@ -77,11 +92,19 @@ class QuestionOption extends Model
      * @var array
      */
     public static $rules = [
+        'take_exam_id' => 'required',
         'question_id' => 'required',
-        'option' => 'required'
+        'answer_id' => 'required',
+        'status' => 'required',
     ];
 
-    public function question() {
-        return $this->belongsTo(Question::class, 'question_id');
+    public function answer() {
+        return $this
+            ->hasOne(QuestionOption::class, 'question_id')
+            ->where('status', 1);
+    }
+
+    public function exam() {
+        return $this->belongsTo(Exam::class, 'take_exam_id');
     }
 }

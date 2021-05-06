@@ -6,12 +6,17 @@ use App\Http\Requests\CreateExamRequest;
 use App\Http\Requests\CreateTakeExamRequest;
 use App\Http\Requests\UpdateExamRequest;
 use App\Http\Requests\UpdateTakeExamRequest;
+use App\Models\Question;
+use App\Models\QuestionAnswer;
+use App\Models\QuestionOption;
 use App\Repositories\ExamRepository;
 use App\Repositories\QuestionRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\TakeExamRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+
+use DB;
 use Flash;
 use Response;
 
@@ -61,8 +66,10 @@ class ExamController extends AppBaseController
                 ->model
                 ->where('user_id', $user->id)
                 ->with('exam')
+                ->whereHas('exam')
+                ->whereHas('user')
                 ->get();
-            // dd(json_decode($examsTaken));
+            // dd(json_decode($examsTaken->pluck('exam_id')));
             $exams = $this->examRepository
                 ->model
                 ->with(
@@ -71,6 +78,7 @@ class ExamController extends AppBaseController
                         'questions.answer'
                     ]
                 )
+                ->whereNotIn('id', $examsTaken->pluck('exam_id'))
                 ->whereHas(
                     'questions',
                     function ($where_question) {
@@ -94,13 +102,22 @@ class ExamController extends AppBaseController
                 ->all(
                     $search,
                     [
-                        'questions'=>function($with_questions){
+                        'questions' =>  function ($with_questions) {
                             $with_questions->select('exam_id');
+                        },
+                        'taker'     =>  function ($with_taker) {
+                            $with_taker->select('exam_id');
                         }
                     ]
                 );
         }
-        // dd(json_decode($exams));
+        // dd(
+        //     json_decode($exams),
+        //     $exams[0]->taker->count(),
+        //     $exams[1]->taker->count(),
+        //     $exams[2]->taker->count(),
+        //     $exams[3]->taker->count(),
+        // );
 
         return view(
             'exams.index',
@@ -156,14 +173,18 @@ class ExamController extends AppBaseController
         if (!$user->is_admin) {
             $questions = $this->questionRepository->all(
                 ['exam_id'=>$id],
-                ['options'],
+                ['options', 'answer'],
                 null,
                 null,
                 ['id','question']
             );
             // dd(json_decode($questions));
         }
-        $exam = $this->examRepository->find($id);
+        $exam = $this->examRepository
+            ->find(
+                $id,
+                ['*'],
+            );
 
         if (empty($exam)) {
             Flash::error('Exam not found');
@@ -171,11 +192,37 @@ class ExamController extends AppBaseController
             return redirect(route('exams.index'));
         }
 
+        $examTaken = $this
+            ->takeExamRepository
+            ->find(
+                $id,
+                ['*'],
+                [
+                    'exam.questions.answer',
+                    'answers'
+                ]
+            );
+
+        $answers = $examTaken->answers->pluck('answer_id', 'question_id');
+        // $answers = [];
+
+
+        // dd(
+        //     [
+        //         'exam'       =>    json_decode($exam),
+        //         'questions'  =>    json_decode($questions),
+        //         'examTaken'  =>    json_decode($examTaken),
+        //         'answers'    =>    $answers
+        //     ]
+        // );
+
         return view(
             'exams.show',
             compact(
                 'user',
                 'exam',
+                'examTaken',
+                'answers',
                 'questions',
             )
         );
@@ -293,5 +340,63 @@ class ExamController extends AppBaseController
                 'exam'     =>  $exam_id,
             ]
         ));
+    }
+
+    public function submit($exam_id) {
+        try {
+            DB::beginTransaction();
+            $examTaken = $this->takeExamRepository->find($exam_id);
+            $questions = Question::select('id', 'exam_id')
+                ->with(
+                    [
+                        'answer'    =>  function ($with_answer) {
+                            $with_answer->select('id', 'question_id');
+                        }
+                    ]
+                )
+                ->where('exam_id', $exam_id)
+                ->get()
+                ->pluck('answer','id');
+
+            $payload = request()->all();
+            // dd(
+            //     json_decode($questions),
+            //     $exam_id,
+            //     $payload,
+            // );
+            $questionAnswers = [];
+            foreach ($payload['answer'] as $question_id => $option_id) {
+                // $questionAnswers[] = new QuestionAnswer(
+                //     [
+                //         'question_id'   =>  $question_id,
+                //         'answer_id'     =>  $option_id,
+                //         'status'        =>  $questions[$question_id]->id == $option_id ? 1 : 0
+                //     ]
+                // );
+                $questionAnswers[] = [
+                    'take_exam_id'  =>  $examTaken->id,
+                    'question_id'   =>  $question_id,
+                    'answer_id'     =>  $option_id,
+                    'status'        =>  $questions[$question_id]->id == $option_id ? 1 : 0
+                ];
+                // dd($question_id, $option_id);
+            }
+            $insert_questionAnswers = QuestionAnswer::insert($questionAnswers);
+
+            $examTaken->status = 1;
+            $examTaken->save();
+
+            // dd(
+            //     json_decode($examTaken),
+            //     $questionAnswers,
+            //     $insert_questionAnswers,
+            // );
+            DB::commit();
+            Flash::success('Answer saved successfully.');
+            return redirect(url('exams/'.$exam_id));
+        } catch (\Throwable $e) {
+            DB::rollback();
+            dd($e);
+        }
     }
 }

@@ -39,4 +39,22 @@ class TakeExamRepository extends BaseRepository
     {
         return TakeExam::class;
     }
+
+    /**
+     * Find model record for given id
+     *
+     * @param int $id
+     * @param array $columns
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model|null
+     */
+    public function find($exam_id, $columns = ['*'], $with = [])
+    {
+        $query = $this->model->newQuery();
+
+        return $query
+            ->select($columns)
+            ->with($with)
+            ->firstWhere('exam_id', $exam_id);
+    }
 }

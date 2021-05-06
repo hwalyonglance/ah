@@ -38,8 +38,7 @@ class CourseController extends AppBaseController
         CourseChapterRepository $courseChapterRepo,
         CourseCategoryRepository $courseCategoryRepository,
         RoleRepository $roleRepository
-    )
-    {
+    ) {
         $this->courseRepository         = $courseRepo;
         $this->courseChapterRepository  = $courseChapterRepo;
         $this->courseCategoryRepository = $courseCategoryRepository;
@@ -68,6 +67,8 @@ class CourseController extends AppBaseController
                 ->model
                 ->where('user_id', $user->id)
                 ->with('course')
+                ->whereHas('course')
+                ->whereHas('user')
                 ->get();
 
             $coursesGroupByCategory = $this->courseCategoryRepository

@@ -88,11 +88,15 @@ class Exam extends BaseModel
         'description' => 'required'
     ];
 
+    public function questions() {
+        return $this->hasMany(Question::class, 'exam_id');
+    }
+
     public function role() {
         return $this->belongsTo(\App\Models\Role::class, 'role_id');
     }
 
-    public function questions() {
-        return $this->hasMany(Question::class, 'exam_id');
+    public function taker() {
+        return $this->hasMany(TakeExam::class, 'exam_id');
     }
 }

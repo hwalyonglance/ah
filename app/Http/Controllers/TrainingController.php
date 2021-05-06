@@ -62,6 +62,8 @@ class TrainingController extends AppBaseController
                 ->model
                 ->where('user_id', $user->id)
                 ->with('training')
+                ->whereHas('training')
+                ->whereHas('user')
                 ->get();
             $trainings = $this->trainingRepository
                 ->model

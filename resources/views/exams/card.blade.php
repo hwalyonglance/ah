@@ -35,7 +35,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ $item->exam->title }}</h5>
                     <p class="card-text">{{ $item->exam->description }}</p>
-                    <a class="btn btn-link" href='{{ url('exam/'.$item->exam->id) }}'>Lihat</a>
+                    <a class="btn btn-link" href='{{ url('exams/'.$item->exam->id) }}'>Lihat</a>
                 </div>
             </div>
         </div>

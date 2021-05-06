@@ -147,11 +147,11 @@ abstract class BaseRepository
      *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model|null
      */
-    public function find($id, $columns = ['*'])
+    public function find($id, $columns = ['*'], $with = [])
     {
         $query = $this->model->newQuery();
 
-        return $query->find($id, $columns);
+        return $query->with($with)->find($id, $columns);
     }
 
     /**
