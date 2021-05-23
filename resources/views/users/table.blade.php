@@ -25,7 +25,11 @@
                         <a href="{{ route('users.edit', [$user->id]) }}" class='btn btn-default btn-xs'>
                             <i class="far fa-edit"></i>
                         </a>
-                        {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                        <button type="submit" class="btn btn-danger btn-xs"
+                            {{ $user->id <= 6 ? 'disabled':'' }}
+                            onclick="return confirm('Are you sure?')">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
                     </div>
                     {!! Form::close() !!}
                 </td>

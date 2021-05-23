@@ -100,14 +100,41 @@ class User extends Authenticatable
     public static $update_rules = [
         'name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255'],
-        'password' => ['nullable','string', 'min:8', 'confirmed'],
+        'password' => ['nullable', 'string', 'min:8', 'confirmed'],
     ];
 
-    public function role() {
-        return $this->belongsTo(Role::class,'role_id')->withDefault(['nama'=>'-']);
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id')->withDefault(['nama' => '-']);
     }
 
-    public function getIsAdminAttribute(){
+    public function getIsAdminAttribute()
+    {
         return $this->role_id == 1;
+    }
+
+    public function getIsKaryawanAttribute()
+    {
+        return $this->role_id == 2;
+    }
+
+    public function getIsRelawanBasicAttribute()
+    {
+        return $this->role_id == 3;
+    }
+
+    public function getIsRelawanIntermediateAttribute()
+    {
+        return $this->role_id == 4;
+    }
+
+    public function getIsRelawanAdvanceAttribute()
+    {
+        return $this->role_id == 5;
+    }
+
+    public function getIsTrainerAttribute()
+    {
+        return $this->role_id == 6;
     }
 }

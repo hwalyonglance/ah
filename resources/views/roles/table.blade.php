@@ -24,7 +24,7 @@
                             <i class="far fa-edit"></i>
                         </a>
                         <button type="submit" class="btn btn-danger btn-xs"
-                            {{ in_array($role->id, [1,2,3,4,5]) ? 'disabled':'' }}
+                            {{ $role->id <= 6 ? 'disabled':'' }}
                             onclick="return confirm('Are you sure?')">
                             <i class="far fa-trash-alt"></i>
                         </button>

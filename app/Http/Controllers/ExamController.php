@@ -16,9 +16,9 @@ use App\Repositories\TakeExamRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 
-use DB;
-use Flash;
-use Response;
+use Illuminate\Support\Facades\DB;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Response;
 
 class ExamController extends AppBaseController
 {
@@ -172,11 +172,11 @@ class ExamController extends AppBaseController
         $questions = [];
         if (!$user->is_admin) {
             $questions = $this->questionRepository->all(
-                ['exam_id'=>$id],
+                ['exam_id' => $id],
                 ['options', 'answer'],
                 null,
                 null,
-                ['id','question']
+                ['id', 'question']
             );
             // dd(json_decode($questions));
         }
@@ -199,12 +199,12 @@ class ExamController extends AppBaseController
                 ['*'],
                 [
                     'exam.questions.answer',
-                    'answers'
+                    'userAnswers'
                 ]
             );
 
-        $answers = $examTaken->answers->pluck('answer_id', 'question_id');
-        // $answers = [];
+        $userAnswers = $examTaken->userAnswers->pluck('answer_id', 'question_id');
+        // $userAnswers = [];
 
 
         // dd(
@@ -212,7 +212,7 @@ class ExamController extends AppBaseController
         //         'exam'       =>    json_decode($exam),
         //         'questions'  =>    json_decode($questions),
         //         'examTaken'  =>    json_decode($examTaken),
-        //         'answers'    =>    $answers
+        //         'userAnswers'    =>    $userAnswers
         //     ]
         // );
 
@@ -222,7 +222,7 @@ class ExamController extends AppBaseController
                 'user',
                 'exam',
                 'examTaken',
-                'answers',
+                'userAnswers',
                 'questions',
             )
         );
@@ -272,7 +272,7 @@ class ExamController extends AppBaseController
 
         if ($request->hasFile('image_url')) {
             $image_url = $request->file('image_url');
-            $prev_gambar_path = storage_path('app/public/'.$exam->image_url);
+            $prev_gambar_path = storage_path('app/public/' . $exam->image_url);
             // dd($prev_gambar_path);
             @unlink($prev_gambar_path);
             $input['image_url'] = $image_url->store('uploads/exam', 'public');
@@ -320,7 +320,8 @@ class ExamController extends AppBaseController
      *
      * @return Response
      */
-    public function take($exam_id, CreateTakeExamRequest $request) {
+    public function take($exam_id, CreateTakeExamRequest $request)
+    {
         $user = auth()->user();
         // dd($exam_id);
         $takeExam = $this->takeExamRepository->create(
@@ -335,17 +336,22 @@ class ExamController extends AppBaseController
 
         Flash::success('Exam berhasil diambil.');
 
-        return redirect(route('exams.show',
+        return redirect(route(
+            'exams.show',
             [
                 'exam'     =>  $exam_id,
             ]
         ));
     }
 
-    public function submit($exam_id) {
+    public function submit($exam_id)
+    {
         try {
             DB::beginTransaction();
-            $examTaken = $this->takeExamRepository->find($exam_id);
+            $user = auth()->user();
+            $examTaken = $this
+                ->takeExamRepository
+                ->find($exam_id);
             $questions = Question::select('id', 'exam_id')
                 ->with(
                     [
@@ -356,23 +362,11 @@ class ExamController extends AppBaseController
                 )
                 ->where('exam_id', $exam_id)
                 ->get()
-                ->pluck('answer','id');
+                ->pluck('answer', 'id');
 
             $payload = request()->all();
-            // dd(
-            //     json_decode($questions),
-            //     $exam_id,
-            //     $payload,
-            // );
             $questionAnswers = [];
             foreach ($payload['answer'] as $question_id => $option_id) {
-                // $questionAnswers[] = new QuestionAnswer(
-                //     [
-                //         'question_id'   =>  $question_id,
-                //         'answer_id'     =>  $option_id,
-                //         'status'        =>  $questions[$question_id]->id == $option_id ? 1 : 0
-                //     ]
-                // );
                 $questionAnswers[] = [
                     'take_exam_id'  =>  $examTaken->id,
                     'question_id'   =>  $question_id,
@@ -386,14 +380,33 @@ class ExamController extends AppBaseController
             $examTaken->status = 1;
             $examTaken->save();
 
-            // dd(
-            //     json_decode($examTaken),
-            //     $questionAnswers,
-            //     $insert_questionAnswers,
-            // );
+            $examTaken = $this
+                ->takeExamRepository
+                ->find(
+                    $exam_id,
+                    ['*'],
+                    [
+                        'exam.questions.answer',
+                        'exam.questions.options',
+                        'userAnswers'
+                    ]
+                );
+
+            if ($user->is_relawan_intermediate && $examTaken->score >= 8) {
+                $user->role_id = 5; // 5: Relawan Advance
+            }
+
+            if ($user->is_relawan_basic && $examTaken->score >= 8) {
+                $user->role_id = 4; // 4: Relawan Intermediate
+            }
+
+            $user->save();
+
+            // dd($user->role_id, auth()->user()->role_id, ($examTaken->score));
+
             DB::commit();
             Flash::success('Answer saved successfully.');
-            return redirect(url('exams/'.$exam_id));
+            return redirect(url('exams/' . $exam_id));
         } catch (\Throwable $e) {
             DB::rollback();
             dd($e);

@@ -67,9 +67,9 @@
                                 <br>
                             @endforeach
                             <p class='ml-4 font-weight-normal'>
-                                Jawaban Anda <b>{{ $answers[$question->id] == $question->answer->id ? 'Benar':'Salah' }}</b>:
-                                {{ $letterByOptionId[$answers[$question->id]] }}.
-                                {{ $optionsById[$answers[$question->id]]->option }}
+                                Jawaban Anda <b>{{ $userAnswers[$question->id] == $question->answer->id ? 'Benar':'Salah' }}</b>:
+                                {{ $letterByOptionId[$userAnswers[$question->id]] }}.
+                                {{ $optionsById[$userAnswers[$question->id]]->option }}
                             </p>
                         @endforeach
                     @else

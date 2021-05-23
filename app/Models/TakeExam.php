@@ -77,29 +77,36 @@ class TakeExam extends BaseModel
         'exam_id' => 'required',
     ];
 
-    public function exam() {
-        return $this->belongsTo(Exam::class, 'exam_id','id');
+    public function exam()
+    {
+        return $this->belongsTo(Exam::class, 'exam_id', 'id');
     }
 
-    public function user() {
-        return $this->belongsTo(User::class, 'user_id','id');
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function answers() {
+    public function userAnswers()
+    {
         return $this->hasMany(QuestionAnswer::class, 'take_exam_id', 'id');
     }
 
-    public function getScoreAttribute() {
-        $answers = $this->answers->pluck('answer_id', 'question_id');
+    public function getScoreAttribute()
+    {
+        $userAnswers = $this->userAnswers->pluck('answer_id', 'question_id');
         $score = 0;
-        foreach ($this->exam->questions as $question) {
-            $score += $question->answer->id == $answers[$question->id];
-        }
         // dd(
-        //     json_decode($this->exam->questions),
-        //     $answers,
-        //     $score
+        //     [
+        //         'questions'                    =>  json_decode($this->exam->questions),
+        //         'user_answerId_by_questionId'  =>  $userAnswers,
+        //         'score'                        =>  $score
+        //     ]
         // );
+        foreach ($this->exam->questions as $question) {
+            $score += $question->answer->id == $userAnswers[$question->id];
+        }
+
         return $score;
     }
 }

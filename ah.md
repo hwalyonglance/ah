@@ -1,15 +1,7 @@
-Baru bisa halaman admin
-Fitur:
-Hak akses
-Akun/user
-Kategori kursus
-Training
-Kursus
-Ujian
-Crud soal Di dalam ujian
+List fitur
+- User admin kelola kelola user aja
+- Tambah user trainer jadi yang bisa kelola training dan course..
+- naik tingkat berdasarkan nilai minimal 80 dari 100
+- ada download sertifikat di kelas advance menu exam kalo nilai > = 80
 
-Minus:
-FIX Crud gambar
-FIX Soal Belum bisa crud pilihan jawaban & atur jawaban benar
-FIX Dashboard
-Halaman user selain admin
+Puntenya kang..
