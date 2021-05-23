@@ -134,6 +134,7 @@ class ExamController extends AppBaseController
     {
         $roles = $this->roleRepository->options('nama');
         unset($roles[1]);
+        unset($roles[6]);
         return view('exams.create', compact('roles'));
     }
 
@@ -246,6 +247,7 @@ class ExamController extends AppBaseController
         }
         $roles = $this->roleRepository->options('nama');
         unset($roles[1]);
+        unset($roles[6]);
 
         return view('exams.edit', compact('exam', 'roles'));
     }

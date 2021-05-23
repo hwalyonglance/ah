@@ -29,7 +29,7 @@
                         <a href="{{ route('exams.show', [$exam->id]) }}" class='btn btn-default btn-xs'>
                             <i class="far fa-eye"></i>
                         </a>
-                        @if($user->is_admin)
+                        @if($user->is_trainer)
                             <a href="{{ route('exams.questions.index', [$exam->id]) }}" class='btn btn-default btn-xs'>
                                 <i class="fa fa-list"></i>
                             </a>

@@ -10,7 +10,7 @@
                 </div>
                 <div class="col-sm-6">
                     <a class="btn btn-default float-right"
-                        href="{{ $user->is_admin ? route('training.chapter.index', $trainingChapter->id) : route('training.index') }}">
+                        href="{{ $user->is_trainer ? route('training.chapter.index', $trainingChapter->id) : route('training.index') }}">
                         Back
                     </a>
                 </div>
@@ -19,7 +19,7 @@
     </section>
 
     <div class="content px-3">
-        @if ($user->is_admin)
+        @if ($user->is_trainer)
             <div class="card">
                 <div class="card-body">
                     <div class="row">

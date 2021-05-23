@@ -86,6 +86,7 @@ class TrainingController extends AppBaseController
     {
         $roles = $this->roleRepository->options();
         unset($roles[1]);
+        unset($roles[6]);
         return view('training.create', compact('roles'));
     }
 
@@ -169,6 +170,7 @@ class TrainingController extends AppBaseController
 
         $roles = $this->roleRepository->options();
         unset($roles[1]);
+        unset($roles[6]);
 
         return view('training.edit', compact('training', 'roles'));
     }

@@ -2,7 +2,7 @@
     $user = Auth::user();
 @endphp
 
-@if($user->is_admin)
+@if($user->is_trainer)
 <li class="nav-item">
     <a href="{{ route('roles.index') }}"
        class="nav-link {{ Request::is('roles*') ? 'active' : '' }}">
@@ -11,7 +11,7 @@
 </li>
 @endif
 
-@if($user->is_admin)
+@if($user->is_trainer)
 <li class="nav-item">
     <a href="{{ route('users.index') }}"
        class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
@@ -29,7 +29,7 @@
 </li>
 @endif
 
-@if(!$user->is_admin)
+@if(!$user->is_trainer)
 <li class="nav-item">
     <a href="{{ route('training.index') }}"
        class="nav-link {{ Request::is('training*') ? 'active' : '' }}">
@@ -38,7 +38,7 @@
 </li>
 @endif
 
-@if(!$user->is_admin)
+@if(!$user->is_trainer)
 <li class="nav-item">
     <a href="{{ route('courses.index') }}"
        class="nav-link {{ Request::is('courses*') ? 'active' : '' }}">
@@ -47,7 +47,7 @@
 </li>
 @endif
 
-@if(!$user->is_admin)
+@if(!$user->is_trainer)
 <li class="nav-item">
     <a href="{{ route('exams.index') }}"
        class="nav-link {{ Request::is('exams*') ? 'active' : '' }}">

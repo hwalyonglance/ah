@@ -119,6 +119,7 @@ class CourseController extends AppBaseController
     {
         $roles = $this->roleRepository->options('nama');
         unset($roles[1]);
+        unset($roles[6]);
         $categories = $this->courseCategoryRepository->options('name');
 
         return view('courses.create', compact('categories', 'roles'));
@@ -204,6 +205,7 @@ class CourseController extends AppBaseController
         }
         $roles = $this->roleRepository->options('nama');
         unset($roles[1]);
+        unset($roles[6]);
         $categories = $this->courseCategoryRepository->options('name');
 
         return view('courses.edit', compact('course', 'roles', 'categories'));

@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Exam {{ $user->is_admin ? 'Details':'' }}</h1>
+                    <h1>Exam {{ $user->is_trainer ? 'Details':'' }}</h1>
                     <br>
                 </div>
                 <div class="col-sm-6">
@@ -34,7 +34,7 @@
     <div class="content px-3">
         <div class="card">
             <div class="card-body">
-                @if ($user->is_admin)
+                @if ($user->is_trainer)
                     <div class="row">
                         @include('exams.show_fields')
                     </div>

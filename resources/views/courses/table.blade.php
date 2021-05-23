@@ -30,7 +30,7 @@
                         <a href="{{ route('courses.show', [$course->id]) }}" class='btn btn-default btn-xs'>
                             <i class="far fa-eye"></i>
                         </a>
-                        @if($user->is_admin)
+                        @if($user->is_trainer)
                             <a href="{{ route('courses.chapter.index', [$course->id]) }}" class='btn btn-default btn-xs'>
                                 <i class="fa fa-list"></i>
                             </a>
