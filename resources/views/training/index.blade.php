@@ -12,7 +12,7 @@
                     <h1>Training</h1>
                 </div>
                 <div class="col-sm-6">
-                    @if($user->is_admin)
+                    @if($user->is_trainer)
                         <a class="btn btn-primary float-right"
                         href="{{ route('training.create') }}">
                             Add New
@@ -29,7 +29,7 @@
 
         <div class="clearfix"></div>
 
-        @if ($user->is_admin)
+        @if ($user->is_trainer)
             <div class="card">
                 <div class="card-body p-0">
                     @include('training.table')

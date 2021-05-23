@@ -60,7 +60,7 @@ class CourseController extends AppBaseController
         $coursesGroupByCategory  = [];
         $coursesTaken            = [];
         $search                  = [];
-        if (!$user->is_admin) {
+        if (!$user->is_trainer) {
             $search['role_id'] = $user->role_id;
 
             $coursesTaken = $this->takeCourseRepository
@@ -76,7 +76,6 @@ class CourseController extends AppBaseController
                 ->with(
                     [
                         'courses' => function ($with_courses) {
-
                         }
                     ]
                 )
@@ -97,7 +96,7 @@ class CourseController extends AppBaseController
             //     ]
             // );
         } else {
-            $courses = $this->courseRepository->all($search, ['category','role']);
+            $courses = $this->courseRepository->all($search, ['category', 'role']);
         }
 
         return view(
@@ -158,9 +157,9 @@ class CourseController extends AppBaseController
     {
         $user = auth()->user();
         $chapters = [];
-        if (!$user->is_admin) {
+        if (!$user->is_trainer) {
             $chapters = $this->courseChapterRepository->all(
-                ['course_id'=>$id],
+                ['course_id' => $id],
                 [],
                 null,
                 null,
@@ -168,7 +167,8 @@ class CourseController extends AppBaseController
             );
             // dd(json_decode($chapters));
             $firstChapter = $chapters->first();
-            return redirect(route('training.chapter.show',
+            return redirect(route(
+                'training.chapter.show',
                 [
                     'training'  =>  $id,
                     'chapter'   =>  $firstChapter->id
@@ -206,7 +206,7 @@ class CourseController extends AppBaseController
         unset($roles[1]);
         $categories = $this->courseCategoryRepository->options('name');
 
-        return view('courses.edit', compact('course', 'roles','categories'));
+        return view('courses.edit', compact('course', 'roles', 'categories'));
     }
 
     /**
@@ -231,7 +231,7 @@ class CourseController extends AppBaseController
 
         if ($request->hasFile('gambar')) {
             $gambar = $request->file('gambar');
-            $prev_gambar_path = storage_path('app/public/'.$course->gambar);
+            $prev_gambar_path = storage_path('app/public/' . $course->gambar);
             // dd($prev_gambar_path);
             @unlink($prev_gambar_path);
             $input['gambar'] = $gambar->store('uploads/course', 'public');
@@ -279,7 +279,8 @@ class CourseController extends AppBaseController
      *
      * @return Response
      */
-    public function take($course_id, CreateTakeCourseRequest $request) {
+    public function take($course_id, CreateTakeCourseRequest $request)
+    {
         $user = auth()->user();
         // dd($course_id);
         // $takeCourse = TakeCourse::create();
@@ -292,7 +293,7 @@ class CourseController extends AppBaseController
         );
 
         $chapters = $this->courseChapterRepository->all(
-            ['course_id'=>$course_id],
+            ['course_id' => $course_id],
             [],
             null,
             null,
@@ -305,7 +306,8 @@ class CourseController extends AppBaseController
 
         Flash::success('Course berhasil diambil.');
 
-        return redirect(route('courses.chapter.show',
+        return redirect(route(
+            'courses.chapter.show',
             [
                 'course'   =>  $course_id,
                 'chapter'  =>  $firstChapter->id

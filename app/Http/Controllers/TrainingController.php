@@ -55,7 +55,7 @@ class TrainingController extends AppBaseController
         $trainings = [];
         $trainingsTaken = [];
         $search = [];
-        if (!$user->is_admin) {
+        if (!$user->is_trainer) {
             $search['role_id'] = $user->role_id;
 
             $trainingsTaken = $this->takeTrainingRepository
@@ -71,7 +71,7 @@ class TrainingController extends AppBaseController
                 ->whereNotIn('id', $trainingsTaken->pluck('id'))
                 ->get();
         } else {
-            $trainings = $this->trainingRepository->all($search,['role']);
+            $trainings = $this->trainingRepository->all($search, ['role']);
         }
 
         return view('training.index', compact('trainings', 'trainingsTaken'));
@@ -122,9 +122,9 @@ class TrainingController extends AppBaseController
     {
         $user = auth()->user();
         $chapters = [];
-        if (!$user->is_admin) {
+        if (!$user->is_trainer) {
             $chapters = $this->trainingChapterRepository->all(
-                ['training_id'=>$id],
+                ['training_id' => $id],
                 [],
                 null,
                 null,
@@ -132,7 +132,8 @@ class TrainingController extends AppBaseController
             );
             // dd(json_decode($chapters));
             $firstChapter = $chapters->first();
-            return redirect(route('training.chapter.show',
+            return redirect(route(
+                'training.chapter.show',
                 [
                     'training'  =>  $id,
                     'chapter'   =>  $firstChapter->id
@@ -194,7 +195,7 @@ class TrainingController extends AppBaseController
 
         if ($request->hasFile('gambar')) {
             $gambar = $request->file('gambar');
-            $prev_gambar_path = storage_path('app/public/'.$training->gambar);
+            $prev_gambar_path = storage_path('app/public/' . $training->gambar);
             // dd($prev_gambar_path);
             @unlink($prev_gambar_path);
             $input['gambar'] = $gambar->store('uploads/training', 'public');
@@ -242,7 +243,8 @@ class TrainingController extends AppBaseController
      *
      * @return Response
      */
-    public function take($training_id, CreateTakeTrainingRequest $request) {
+    public function take($training_id, CreateTakeTrainingRequest $request)
+    {
         $user = auth()->user();
         // $takeTraining = TakeTraining::create();
         $takeTraining = $this->takeTrainingRepository->create(
@@ -254,7 +256,7 @@ class TrainingController extends AppBaseController
         );
 
         $chapters = $this->trainingChapterRepository->all(
-            ['training_id'=>$training_id],
+            ['training_id' => $training_id],
             [],
             null,
             null,
@@ -267,7 +269,8 @@ class TrainingController extends AppBaseController
 
         Flash::success('Training berhasil diambil.');
 
-        return redirect(route('training.chapter.show',
+        return redirect(route(
+            'training.chapter.show',
             [
                 'training'  =>  $training_id,
                 'chapter'   =>  $firstChapter->id

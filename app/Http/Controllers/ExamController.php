@@ -59,7 +59,7 @@ class ExamController extends AppBaseController
         $exams = [];
         $examsTaken = [];
         $search = [];
-        if (!$user->is_admin) {
+        if (!$user->is_trainer) {
             $search['role_id'] = $user->role_id;
 
             $examsTaken = $this->takeExamRepository
@@ -170,7 +170,7 @@ class ExamController extends AppBaseController
     {
         $user = auth()->user();
         $questions = [];
-        if (!$user->is_admin) {
+        if (!$user->is_trainer) {
             $questions = $this->questionRepository->all(
                 ['exam_id' => $id],
                 ['options', 'answer'],

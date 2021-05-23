@@ -43,11 +43,12 @@ class TrainingChapterController extends AppBaseController
     public function index(Request $request, $training_id)
     {
         $user = auth()->user();
-        $trainingChapters = $this->trainingChapterRepository->all(['training_id'=>$training_id]);
+        $trainingChapters = $this->trainingChapterRepository->all(['training_id' => $training_id]);
 
-        if (!$user->is_admin) {
+        if (!$user->is_trainer) {
             $firstChapter = $trainingChapters->first();
-            return redirect(route('training.chapter.show',
+            return redirect(route(
+                'training.chapter.show',
                 [
                     'training'  =>  $training_id,
                     'chapter'   =>  $firstChapter->id
@@ -59,7 +60,7 @@ class TrainingChapterController extends AppBaseController
 
         return view(
             'training.chapter.index',
-            compact('trainingChapters','training', 'training_id')
+            compact('trainingChapters', 'training', 'training_id')
         );
     }
 
@@ -106,15 +107,15 @@ class TrainingChapterController extends AppBaseController
         if (empty($trainingChapter)) {
             Flash::error('Training Chapter not found');
 
-            return redirect(route('training.chapter.index',$training_id));
+            return redirect(route('training.chapter.index', $training_id));
         }
 
         $training = $this->training;
 
         $chapters = [];
 
-        if (!$user->is_admin) {
-            $chapters = $this->trainingChapterRepository->all(['training_id'=>$training_id]);
+        if (!$user->is_trainer) {
+            $chapters = $this->trainingChapterRepository->all(['training_id' => $training_id]);
         }
 
         return view(

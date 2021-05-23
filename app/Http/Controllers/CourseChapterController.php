@@ -46,9 +46,10 @@ class CourseChapterController extends AppBaseController
         $user = auth()->user();
         $courseChapters = $this->courseChapterRepository->all(['course_id' => $course_id]);
 
-        if (!$user->is_admin) {
+        if (!$user->is_trainer) {
             $firstChapter = $courseChapters->first();
-            return redirect(route('courses.chapter.show',
+            return redirect(route(
+                'courses.chapter.show',
                 [
                     'course'    =>  $course_id,
                     'chapter'   =>  $firstChapter->id
@@ -114,8 +115,8 @@ class CourseChapterController extends AppBaseController
 
         $chapters = [];
 
-        if (!$user->is_admin) {
-            $chapters = $this->courseChapterRepository->all(['course_id'=>$course_id]);
+        if (!$user->is_trainer) {
+            $chapters = $this->courseChapterRepository->all(['course_id' => $course_id]);
         }
 
         return view(
